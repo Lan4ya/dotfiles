@@ -52,7 +52,7 @@ map('v', '>', '>gv', { remap = true })
 map({ 'n', 't' }, '<M-i>', function()
     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
 end, { desc = 'toggle floating term' })
--- map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
+map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
 -- Buffers
 -- local function map_buffer_cmd(lhs, rhs, desc)
