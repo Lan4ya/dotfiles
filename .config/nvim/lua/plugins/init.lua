@@ -343,7 +343,7 @@ return {
 
     {
         'romus204/tree-sitter-manager.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = { 'BufReadPre', 'BufNewFile' },
         cmd = { 'TSManager' },
         config = function()
             local tsm = require 'tree-sitter-manager'
@@ -353,6 +353,8 @@ return {
                     'bash',
                     'c',
                     'diff',
+                    'json',
+                    'json5',
                     'html',
                     'css',
                     'ecma',
@@ -367,23 +369,25 @@ return {
                     'query',
                     'vim',
                     'vimdoc',
+                    'make',
+                    'nginx',
+                    'sql',
+                    'zsh',
                 },
                 auto_install = true,
-                -- border = nil, "rounded" | "single", if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
-                indent = true,
+                -- border = nil, -- (rounded | single), if nil, use style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+                -- indent = true,
                 highlight = true,
             }
 
-            -- Migrations from other TS managers can leave parsers installed but missing
-            -- queries, which breaks highlighting for TS/TSX.
-            -- local query_root = vim.fs.joinpath(vim.fn.stdpath 'data', 'site', 'queries')
-            -- local query_bootstrap = { 'ecma', 'typescript', 'tsx' }
-            -- for _, lang in ipairs(query_bootstrap) do
-            --     local highlights = vim.fs.joinpath(query_root, lang, 'highlights.scm')
-            --     if not vim.uv.fs_stat(highlights) then
-            --         tsm._install_single(lang)
-            --     end
-            -- end
+            --  tree-sitter-manager highlights by parser-name filetypes (like tsx), but Neovim sets React buffers to typescriptreact / javascriptreact.
+            --  So the plugin’s internal FileType autocmd doesn't fire for these two fts.
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = { 'javascriptreact', 'typescriptreact' },
+                callback = function(ev)
+                    vim.treesitter.start(ev.buf, 'tsx')
+                end,
+            })
         end,
     },
 

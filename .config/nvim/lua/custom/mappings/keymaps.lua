@@ -328,8 +328,9 @@ map('n', '<leader>fb', '<cmd>Telescope builtin<cr>', { desc = '[F]ind [B]uiltins
 map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp Page' })
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>', { desc = '[F]ind Telescope [C]ommands' })
 
--- Quick edit for nvim config
-map('n', '<leader>fe', '<cmd>lua require("telescope.builtin").find_files { cwd = vim.fn.stdpath("config") }<cr>', { desc = '[F]ind & [E]dit Nvim Conf' })
+-- Quick edit
+map('n', '<leader>fen', '<cmd>lua require("telescope.builtin").find_files { cwd = vim.fn.stdpath("config") }<cr>', { desc = '[F]ind & [E]dit Nvim Conf' })
+map('n', '<leader>feh', '<cmd>lua require("telescope.builtin").find_files { cwd = "~/.config/hypr/" }<cr>', { desc = '[F]ind & [E]dit [H]ypr Conf' })
 
 -- Telescope git
 map('n', '<leader>cm', '<cmd>Telescope git_commits<CR>', { desc = 'telescope git commits' })

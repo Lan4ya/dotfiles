@@ -32,7 +32,6 @@ local function on_attach(client, _)
     client.server_capabilities.documentHighlightProvider = false
 end
 
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 require('mason').setup()

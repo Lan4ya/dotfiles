@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
-# Rofi menu for KooL Hyprland Quick Settings (SUPER SHIFT E)
-# Updated for UserConfigs/configs separation
 
 # Modify this config file for default terminal and EDITOR
-config_file="$HOME/.config/hypr/UserConfigs/01-UserDefaults.conf"
+config_file="$HOME/.config/hypr/UserConfigs/UserDefaults.conf"
 
 tmp_config_file=$(mktemp)
 sed 's/^\$//g; s/ = /=/g' "$config_file" > "$tmp_config_file"
 source "$tmp_config_file"
-# ##################################### #
 
 # variables
 configs="$HOME/.config/hypr/configs"
 UserConfigs="$HOME/.config/hypr/UserConfigs"
 rofi_theme="$HOME/.config/rofi/config-edit.rasi"
-msg=' ⁉️ Choose what to do ⁉️'
 iDIR="$HOME/.config/swaync/images"
 scriptsDir="$HOME/.config/hypr/scripts"
 UserScripts="$HOME/.config/hypr/UserScripts"
@@ -27,6 +23,7 @@ show_info() {
         notify-send "Info" "$1"
     fi
 }
+
 # Function to toggle Rainbow Borders script availability and refresh UI components
 toggle_rainbow_borders() {
     local rainbow_script="$UserScripts/RainbowBorders.sh"
@@ -185,13 +182,10 @@ Edit User Decorations
 Edit User Animations
 Edit User Laptop Settings
 --- SYSTEM DEFAULTS  ---
-Edit System Default Keybinds
 Edit System Default Startup Apps
-Edit System Default Window Rules
 Edit System Default Settings
 --- UTILITIES ---
 Set SDDM Wallpaper
-Choose Kitty Terminal Theme
 Configure Monitors (nwg-displays)
 Configure Workspace Rules (nwg-displays)
 GTK Settings (nwg-look)
@@ -201,6 +195,7 @@ Choose Hyprland Animations
 Choose Monitor Profiles
 Choose Rofi Themes
 Search for Keybinds
+Toggle Waybar Weather units (C/F)
 Toggle Game Mode
 Switch Dark-Light Theme
 Rainbow Borders Mode
@@ -209,25 +204,21 @@ EOF
 
 # Main function to handle menu selection
 main() {
-    choice=$(menu | rofi -i -dmenu -config $rofi_theme -mesg "$msg")
+    choice=$(menu | rofi -i -dmenu -config $rofi_theme)
     
     # Map choices to corresponding files
     case "$choice" in
-    	"Edit User Defaults") file="$UserConfigs/01-UserDefaults.conf" ;;
+    	"Edit User Defaults") file="$UserConfigs/UserDefaults.conf" ;;
         "Edit User ENV variables") file="$UserConfigs/ENVariables.conf" ;;
         "Edit User Keybinds") file="$UserConfigs/UserKeybinds.conf" ;;
         "Edit User Startup Apps (overlay)") file="$UserConfigs/Startup_Apps.conf" ;;
         "Edit User Window Rules (overlay)") file="$UserConfigs/WindowRules.conf" ;;
         "Edit User Settings") file="$configs/SystemSettings.conf"; show_info "Editing default settings. Copy to UserConfigs/UserSettings.conf to override." ;;
         "Edit User Decorations") file="$UserConfigs/UserDecorations.conf" ;;
-        "Edit User Animations") file="$UserConfigs/UserAnimations.conf" ;;
         "Edit User Laptop Settings") file="$UserConfigs/Laptops.conf" ;;
-        "Edit System Default Keybinds") file="$configs/Keybinds.conf" ;;
         "Edit System Default Startup Apps") file="$configs/Startup_Apps.conf" ;;
-        "Edit System Default Window Rules") file="$configs/WindowRules.conf" ;;
         "Edit System Default Settings") file="$configs/SystemSettings.conf" ;;
         "Set SDDM Wallpaper") $scriptsDir/sddm_wallpaper.sh --normal ;;
-        "Choose Kitty Terminal Theme") $scriptsDir/Kitty_themes.sh ;;
         "Configure Monitors (nwg-displays)") 
             if ! command -v nwg-displays &>/dev/null; then
                 notify-send -i "$iDIR/error.png" "E-R-R-O-R" "Install nwg-displays first"
@@ -262,6 +253,7 @@ main() {
         "Choose Monitor Profiles") $scriptsDir/MonitorProfiles.sh ;;
         "Choose Rofi Themes") $scriptsDir/RofiThemeSelector.sh ;;
         "Search for Keybinds") $scriptsDir/KeyBinds.sh ;;
+        "Toggle Waybar Weather units (C/F)") $scriptsDir/Toggle-weather-waybar-units.sh ;;
         "Toggle Game Mode") $scriptsDir/GameMode.sh ;;
         "Switch Dark-Light Theme") $scriptsDir/DarkLight.sh ;;
         "Rainbow Borders Mode") rainbow_borders_menu ;;
@@ -280,3 +272,4 @@ if pidof rofi > /dev/null; then
 fi
 
 main
+

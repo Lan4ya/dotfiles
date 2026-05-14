@@ -2,7 +2,7 @@
 
 ## Build, test, and lint commands
 
-- **Bootstrap/update plugins (and run plugin build hooks):** `nvim --headless "+Lazy! sync" "+qa"`
+- **Bootstrap/install plugins:** `nvim --headless "+qa"`
 - **Format/Lint Lua config with Stylua (repo style):** `stylua --check init.lua lua`
 - **Auto-fix Lua formatting:** `stylua init.lua lua`
 - **Tests:** this repo currently has no runnable test suite configured (the neotest plugin block is present but commented out).
@@ -10,10 +10,9 @@
 
 ## High-level architecture
 
-- Entry point is `init.lua`. It bootstraps `lazy.nvim`, then loads one of two profiles:
-  - **Native Neovim profile:** `plugins` + `custom.*`
-  - **VSCode-neovim profile:** `vsc.plugins` + `vsc.*` (guarded by `vim.g.vscode`)
-- Plugin specs are split across `lua/plugins/*.lua` (not just one file). Lazy imports the whole `plugins` namespace.
+- Entry point is `init.lua`. It uses `vim.pack` directly and then loads one of two profiles:
+  - **Native Neovim profile:** plugin declarations in `init.lua` + `custom.*`
+  - **VSCode-neovim profile:** plugin declarations in `init.lua` + `vsc.*` (guarded by `vim.g.vscode`)
 - Most plugin behavior is delegated to focused modules in `lua/configs/*` and loaded from each plugin’s `config` callback.
 - LSP startup is intentionally delayed until a custom `User FilePost` event (`lua/custom/autocmds.lua`) to avoid eager startup before UI/buffer state is ready.
 - `lua/configs/lsp/_lsp.lua` is the LSP orchestrator:
@@ -29,7 +28,7 @@
 
 - **Custom keyboard layout remap is foundational.** Core motions are remapped in `lua/custom/mappings/remap.lua` (and mirrored in `lua/vsc/mappings.lua`). Do not assume default `hjkl` semantics when adding mappings.
 - **Use project autocommands pattern:** `augroup('idk_' .. name)` helper + clear groups, defined in `custom/autocmds.lua`/`vsc/autocmds.lua`.
-- **Prefer lazy loading by event/cmd/keys** in plugin specs; avoid unconditional startup unless intentionally early (e.g., colorscheme).
+- **Prefer lazy loading by event/cmd/keys** in `init.lua` plugin declarations; avoid unconditional startup unless intentionally early (e.g., colorscheme).
 - **Formatting/linting pipeline is editor-driven:**
   - `conform.nvim` handles format-on-save with per-filetype formatters (`lua/configs/conform.lua`),
   - `nvim-lint` runs `eslint_d` on JS/TS on `BufWritePost`, `BufEnter`, and `InsertLeave`.

@@ -65,7 +65,7 @@ o.linebreak = true -- Wrap lines at convenient points
 o.pumblend = 10 -- popup blend
 o.pumheight = 10 -- maximum number of entries in a popup
 o.ruler = false -- disable the default ruler
-o.shortmess:append { W = true, c = true, C = true }
+o.shortmess:append { W = true, I = true, c = true, C = true }
 o.scrolloff = 6
 o.sidescrolloff = 8
 o.signcolumn = 'yes'
