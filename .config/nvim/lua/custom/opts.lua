@@ -19,6 +19,7 @@ vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 o.timeoutlen = 550 -- 1000 default
 o.ttimeoutlen = 10 -- 50 default
 
+o.termguicolors = true
 o.swapfile = false
 o.list = false
 o.mouse = 'a'
@@ -40,7 +41,7 @@ o.guicursor =
 --     'i-ci-r-cr-t:block-blinkon3-blinkoff3-blinkwait1-Cursor/lCursor',
 -- }
 
-o.smoothscroll = true
+-- o.smoothscroll = true
 -- o.mousescroll = 'ver:25,hor:6'
 
 o.foldenable = true

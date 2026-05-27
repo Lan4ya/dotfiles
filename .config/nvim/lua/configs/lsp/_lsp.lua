@@ -1,8 +1,12 @@
 local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
+-- Avoid documentColor stale-client assertions; use nvim-highlight-colors instead.
+vim.lsp.document_color.enable(false)
+
 vim.diagnostic.config {
     virtual_text = false,
+    -- virtual_text = { current_line = true },
     float = { border = 'rounded', source = 'if_many' },
     severity_sort = true,
     underline = false,
@@ -37,12 +41,13 @@ local capabilities = require('blink.cmp').get_lsp_capabilities()
 require('mason').setup()
 
 local servers = {
-    -- lua_ls = require 'configs.lsp.lua',
+    lua_ls = require 'configs.lsp.lua',
     -- tsgo = require 'configs.lsp.tsgo',
     vtsls = require 'configs.lsp.vtsls',
     -- ts_ls = 'configs.lsp.ts',
     denols = require 'configs.lsp.deno',
     emmet_language_server = require 'configs.lsp.emmet',
+    eslint = require 'configs.lsp.eslint',
     tailwindcss = require 'configs.lsp.tailwindcss',
     -- cssls = require 'configs.lsp.css',
     -- html = require 'configs.lsp.html',

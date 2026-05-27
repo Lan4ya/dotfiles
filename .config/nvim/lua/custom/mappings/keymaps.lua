@@ -4,7 +4,7 @@ local opts = { silent = true, noremap = true }
 
 -- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
-map('x', '<leader>p', [["_dP]], { desc = 'blackhole paste' })
+map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
@@ -129,12 +129,6 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
--- Bash Scripts
--- map({ 'n' }, '<M-idk', ':!tmux-windowizer $(git rev-parse --abbrev-ref HEAD) pnpm dev<CR><CR>')
-map({ 'n' }, '<M-1>', ':!tmux-windowizer nn ')
-map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:fe<CR><CR>')
-map({ 'n' }, '<M-9>', ':!tmux-windowizer dev:be pnpm dev:be<CR><CR>')
-
 --------------------------------------- Plugin Mappings ---------------------------------------
 
 -- Nvim-Tree
@@ -190,7 +184,7 @@ map('n', '<leader>N', function()
 
     -- defer to give the UI time to initialize
     vim.defer_fn(function()
-        nnp.resize(110)
+        nnp.resize(136)
         nnp.toggle_side 'right'
     end, 5)
 end, { desc = 'NoNeckPain' })
@@ -198,20 +192,6 @@ end, { desc = 'NoNeckPain' })
 map('n', '<leader>r', function()
     require('snacks').rename.rename_file()
 end, { desc = 'Rename Current File' })
-
--- Bufferline
--- map('n', '<leader>j', '<Cmd>BufferLineGoToBuffer 1<CR>')
--- map('n', '<leader>k', '<Cmd>BufferLineGoToBuffer 2<CR>')
--- map('n', '<leader>l', '<Cmd>BufferLineGoToBuffer 3<CR>')
--- map('n', '<leader>p', '<Cmd>BufferLineGoToBuffer 4<CR>')
--- map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>')
--- map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>')
-
--- Ts-Tools
--- map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS [R]emove [U]nused Imports' })
--- map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove All [U]nused Statements' })
--- map('n', 'gmi', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add [M]issing [I]mports' })
--- map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
 
 map('n', '<M-o>', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 

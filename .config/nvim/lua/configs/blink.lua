@@ -46,7 +46,8 @@ local opts = {
         preset = 'default',
 
         ['<CR>'] = {
-            'select_and_accept', -- if there's cmp
+            'accept', -- if there's cmp
+            -- 'select_and_accept', -- if there's cmp
             'fallback', -- else normal Enter
         },
 
@@ -104,7 +105,8 @@ local opts = {
 
         menu = {
             border = 'rounded',
-            winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
+            -- winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
+            winhighlight = 'Normal:None,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
             scrollbar = false,
             draw = {
                 treesitter = { 'lsp' },

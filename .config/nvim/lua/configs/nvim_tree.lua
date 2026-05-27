@@ -68,7 +68,7 @@ local opts = {
     },
     view = {
         side = 'left',
-        width = 40,
+        width = 50,
         preserve_window_proportions = true,
     },
     actions = {
@@ -97,7 +97,7 @@ local opts = {
         indent_markers = { enable = true },
         icons = {
             show = {
-                file = false,
+                file = true,
             },
             glyphs = {
                 default = '',

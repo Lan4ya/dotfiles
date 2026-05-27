@@ -13,5 +13,4 @@ else
 	hyprctl keyword decoration:blur:size 2
 	hyprctl keyword decoration:blur:passes 1
  	notify-send -e -u low -i "$notif/note.png" " Less Blur"
-
 fi

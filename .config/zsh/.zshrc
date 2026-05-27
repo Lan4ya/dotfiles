@@ -96,6 +96,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # tmux sessionizers 
 # bindkey -s '\el' "tms\n" 
+bindkey -s '\en' "session-0\n" 
 bindkey -s '\ed' "tms switch\n" 
 bindkey -s '\ef' 'tmux-sessionizer\n' 
 
@@ -292,8 +293,6 @@ alias rptn='repomix && thunar && hyprctl dispatch workspace 8'
 alias ghc='gh copilot' 
 alias ghcs='gh copilot suggest' 
 alias ghce='gh copilot explain'
-
-alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

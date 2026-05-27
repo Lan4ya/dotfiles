@@ -84,7 +84,7 @@ end
 
 _G.statusline = function()
     return table.concat {
-        '%#StatusLinePath# %<%t ',
+        '%#StatusLinePath# %<%f ',
         '%#StatusLine#',
         ' %m ',
         diagnostic_cache,

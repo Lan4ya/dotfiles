@@ -6,49 +6,32 @@ return {
         'gbprod/nord.nvim',
         lazy = false,
         priority = 1000,
-        -- overrides = {
-        --     NormalFloat = { bg = 'none' },
-        --     FloatBorder = { bg = 'none' },
-        -- },
         config = function()
             require('nord').setup {
                 transparent = false,
             }
             vim.cmd.colorscheme 'nord'
+            local set_hl = vim.api.nvim_set_hl
+            local muted_fg = '#C8D0E0'
+
+            set_hl(0, '@operator', { fg = '#1bfd9c' })
+
+            local highlights = {
+                '@number',
+                '@boolean',
+                '@string',
+                '@variable',
+                -- '@keyword.function',
+                -- '@function.call',
+                -- '@function.builtin',
+                '@tag',
+            }
+
+            for _, hl in ipairs(highlights) do
+                set_hl(0, hl, { fg = muted_fg })
+            end
         end,
     },
-    -- {
-    --     'rose-pine/neovim',
-    --     name = 'rose-pine',
-    --     lazy = false,
-    --     priority = 1000,
-    --     config = function()
-    --         require('rose-pine').setup {
-    --             dark_variant = 'main', -- main, moon
-    --             styles = {
-    --                 transparency = true,
-    --             },
-    --             highlight_groups = {
-    --                 NormalFloat = { bg = 'none' },
-    --                 FloatBorder = { bg = 'none' },
-    --             },
-    --         }
-    --         vim.cmd 'colorscheme rose-pine'
-    --     end,
-    -- },
-
-    -- install = {
-    --     colorscheme = { 'nord' },
-    -- },
-    -- {
-    --     'folke/tokyonight.nvim',
-    --     lazy = false,
-    --     priority = 1000,
-    --     opts = {},
-    --     config = function()
-    --         vim.cmd [[colorscheme tokyonight-moon]]
-    --     end,
-    -- },
 
     -- {
     --     -- 'andreypopp/vim-colors-plain',
@@ -58,6 +41,8 @@ return {
     --     init = function()
     --         vim.cmd [[colorscheme off]]
     --         -- vim.cmd [[colorscheme plain]]
+    --         local set_hl = vim.api.nvim_set_hl
+    --         set_hl(0, '@operator', { fg = '#1bfd9c' })
     --         vim.o.background = 'dark'
     --     end,
     -- },
@@ -225,7 +210,7 @@ return {
         end,
     },
 
-    -- { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
     -- no more annoyinng default notif
     {
@@ -347,7 +332,6 @@ return {
         cmd = { 'TSManager' },
         config = function()
             local tsm = require 'tree-sitter-manager'
-
             tsm.setup {
                 ensure_installed = {
                     'bash',
@@ -390,18 +374,6 @@ return {
             })
         end,
     },
-
-    -- -- linter
-    -- {
-    --     'nvimtools/none-ls.nvim',
-    --     dependencies = {
-    --         'nvimtools/none-ls-extras.nvim',
-    --     },
-    --     event = 'VeryLazy',
-    --     opts = function()
-    --         return require 'configs.none_ls'
-    --     end,
-    -- },
 
     -- {
     --     'mfussenegger/nvim-lint',
@@ -450,19 +422,6 @@ return {
         cmd = 'Trouble',
     },
 
-    -- faster typescript lsp
-    -- {
-    --     'pmizio/typescript-tools.nvim',
-    --     filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-    --     cond = function()
-    --         -- disable plugin if we're in a deno project
-    --         return not vim.fs.root(0, { 'deno.json', 'deno.jsonc', 'deno.lock' })
-    --     end,
-    --     config = function()
-    --         require 'configs.ts_tools'
-    --     end,
-    -- },
-
     -- provide bg color on color vals
     {
         'brenoprata10/nvim-highlight-colors',
@@ -499,14 +458,24 @@ return {
     --     end,
     -- },
 
-    -- {
-    --     'zbirenbaum/copilot.lua',
-    --     event = 'InsertEnter',
-    --     -- dependencies = {
-    --     -- 'copilotlsp-nvim/copilot-lsp', -- for Next Edit Suggestion (NES)
-    --     -- },
-    --     config = function()
-    --         require 'configs.copilot'
-    --     end,
-    -- },
+    {
+        'zbirenbaum/copilot.lua',
+        event = 'InsertEnter',
+        dependencies = {
+            'copilotlsp-nvim/copilot-lsp', -- for Next Edit Suggestion (NES)
+        },
+        config = function()
+            require 'configs.copilot'
+        end,
+    },
+    {
+        'folke/noice.nvim',
+        event = 'VeryLazy',
+        dependencies = {
+            {
+                'MunifTanjim/nui.nvim',
+                module = 'nui',
+            },
+        },
+    },
 }
