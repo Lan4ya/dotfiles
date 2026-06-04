@@ -276,7 +276,7 @@ alias lla='ls -la'
 
 alias yacleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
-alias paccleanf='pacman -Sc --noconfirm' 
+alias paccleanf='sudo pacman -Sc --noconfirm' 
 alias t='thunar' 
 
 alias a='tmux a'
@@ -347,3 +347,10 @@ eval "$(zoxide init --cmd z zsh)"
 # zprof | head -n 30  # Display the profiling report
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/maya/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/maya/.opencode/bin:$PATH

@@ -27,23 +27,65 @@ local function handle_diagnostic_list()
 end
 
 -- Harpoon
--- local harpoon_ok, harpoon = pcall(require, 'harpoon')
---
--- local harpoon_list_cache = ''
---
+local harpoon_ok, harpoon = pcall(require, 'harpoon')
+
+local harpoon_list_cache = ''
+
 -- local function basename(path)
 --     return path:match '([^/\\]+)$' or path
 -- end
---
--- local uv = vim.uv or vim.loop
---
--- local function normalize(path)
---     if not path or path == '' then
---         return ''
---     end
---     return uv.fs_realpath(path) or vim.fs.normalize(path)
--- end
 
+local uv = vim.uv or vim.loop
+
+local function normalize(path)
+    if not path or path == '' then
+        return ''
+    end
+    return uv.fs_realpath(path) or vim.fs.normalize(path)
+end
+
+_G.handle_harpoon_list = function()
+    if not harpoon_ok or not harpoon then
+        harpoon_list_cache = ''
+        return
+    end
+
+    local list = harpoon:list()
+    local items = (list and list.items) or {}
+    local current = normalize(vim.api.nvim_buf_get_name(0))
+    local max = math.min(4, #items)
+
+    local parts = {}
+    for i = 1, max do
+        local value = items[i] and items[i].value
+        if type(value) == 'string' and value ~= '' then
+            local full = normalize(value)
+
+            -- Extract filename and parent directory
+            local filename = vim.fn.fnamemodify(full, ':t')
+            local parent = vim.fn.fnamemodify(full, ':h:t')
+
+            -- Combine them if a valid parent directory exists
+            local base = filename
+            if parent ~= '' and parent ~= '.' then
+                base = parent .. '/' .. filename
+            end
+
+            local disp = (#base > 40) and (base:sub(1, 40) .. '…') or base
+
+            -- prepend number
+            disp = i .. ':' .. disp
+
+            if full == current then
+                disp = '%#HarpoonActive#' .. disp .. '%#StatusLine#'
+            end
+
+            parts[#parts + 1] = disp
+        end
+    end
+
+    harpoon_list_cache = table.concat(parts, ' %#HarpoonDivider#|%#StatusLine# ')
+end
 -- _G.handle_harpoon_list = function()
 --     if not harpoon_ok or not harpoon then
 --         harpoon_list_cache = ''
@@ -84,12 +126,12 @@ end
 
 _G.statusline = function()
     return table.concat {
-        '%#StatusLinePath# %<%f ',
+        '%#StatusLinePath# %<%t ',
         '%#StatusLine#',
         ' %m ',
         diagnostic_cache,
         ' ',
-        -- harpoon_list_cache,
+        harpoon_list_cache,
         '%=',
         git_branch(),
         ' %y %r %h %q',
@@ -97,11 +139,11 @@ _G.statusline = function()
 end
 
 -- Autocmds
--- vim.api.nvim_create_autocmd('BufEnter', {
---     callback = function()
---         _G.handle_harpoon_list()
---     end,
--- })
+vim.api.nvim_create_autocmd('BufEnter', {
+    callback = function()
+        _G.handle_harpoon_list()
+    end,
+})
 
 vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
     callback = function()
@@ -111,17 +153,18 @@ vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
 })
 
 -- Triggered with harpoon bindings or when leaving the harpoon menu buffer
--- vim.api.nvim_create_autocmd({ 'BufWinLeave', 'User' }, {
---     pattern = { '__harpoon-menu__*', 'HarpoonUpdated' },
---     callback = function()
---         -- _G.handle_harpoon_list()
---         vim.cmd.redrawstatus()
---     end,
--- })
+vim.api.nvim_create_autocmd({ 'BufWinLeave', 'User' }, {
+    pattern = { '__harpoon-menu__*', 'HarpoonUpdated' },
+    callback = function()
+        _G.handle_harpoon_list()
+        vim.cmd.redrawstatus()
+    end,
+})
 
 -- Highlights
 vim.api.nvim_set_hl(0, 'HarpoonActive', { fg = '#0d3b66', bold = true })
 vim.api.nvim_set_hl(0, 'StatusLinePath', { bg = '#2E3440', fg = '#e0e0e0' })
+vim.api.nvim_set_hl(0, 'HarpoonDivider', { fg = '#1bfd9c' })
 
 -- Activate Statusline
 vim.o.statusline = '%!v:lua.statusline()'

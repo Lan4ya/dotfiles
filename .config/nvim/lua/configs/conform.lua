@@ -31,6 +31,14 @@ local options = {
             }
         end
     end,
+    formatters = {
+        prettier = {
+            prepend_args = { '--print-width', '120' },
+        },
+        prettierd = {
+            prepend_args = { '--print-width', '120' },
+        },
+    },
 }
 
 conform.setup(options)

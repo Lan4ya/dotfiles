@@ -81,6 +81,7 @@ return {
     --     end,
     -- },
 
+    -- detects a projects indentation style and sets 'shiftwidth', 'tabstop', and 'expandtab' accordingly
     {
         'tpope/vim-sleuth',
         event = { 'BufReadPre', 'BufNewFile' },
@@ -106,6 +107,8 @@ return {
         'tpope/vim-fugitive',
         cmd = { 'G', 'Git' },
     },
+    -- make fugitive cmd's async (not using other feats outside of that)
+    { 'tpope/vim-dispatch', lazy = true },
 
     {
         'sindrets/diffview.nvim',
@@ -118,7 +121,27 @@ return {
             'DiffviewRefresh',
             'DiffviewToggleFiles',
         },
-
+        keys = {
+            {
+                '<leader>gdo',
+                function()
+                    local view = require('diffview.lib').get_current_view()
+                    if view then
+                        vim.cmd 'DiffviewClose'
+                    else
+                        vim.cmd 'DiffviewOpen'
+                    end
+                end,
+                desc = 'Git Diffview: Toggle',
+            },
+            -- { '<leader>gdo', '<cmd>DiffviewOpen<cr>', desc = 'Diffview: [O]pen' },
+            -- { '<leader>gdc', '<cmd>DiffviewClose<cr>', desc = 'Diffview: [C]lose' },
+            { '<leader>gdh', '<cmd>DiffviewFileHistory<cr>', desc = 'Git Diffview: File [H]istory' },
+            { '<leader>gdf', '<cmd>DiffviewFocusFiles<cr>', desc = 'Git Diffview: [F]ocus Files Sidebar' },
+            { '<leader>gdl', '<cmd>DiffviewLog<cr>', desc = 'Git Diffview: [L]og' },
+            { '<leader>gdr', '<cmd>DiffviewRefresh<cr>', desc = 'Git Diffview: [R]efresh views' },
+            { '<leader>gdt', '<cmd>DiffviewToggleFiles<cr>', desc = 'Git Diffview: [T]oggle Files Sidebar' },
+        },
         config = function()
             require 'configs.diffview'
         end,
@@ -475,6 +498,84 @@ return {
             {
                 'MunifTanjim/nui.nvim',
                 module = 'nui',
+            },
+        },
+    },
+    {
+        'toppair/peek.nvim',
+        event = { 'VeryLazy' },
+        build = 'deno task --quiet build:fast',
+        config = function()
+            require('peek').setup {
+                auto_load = true, -- whether to automatically load preview when
+                -- entering another markdown buffer
+                close_on_bdelete = true, -- close preview window on buffer delete
+                syntax = true, -- enable syntax highlighting, affects performance
+                theme = 'dark', -- 'dark' or 'light'
+                update_on_change = true,
+                app = 'browser', -- 'webview', 'browser', string or a table of strings
+                -- explained below
+                filetype = { 'markdown' }, -- list of filetypes to recognize as markdown
+                -- relevant if update_on_change is true
+                throttle_at = 200000, -- start throttling when file exceeds this
+                -- amount of bytes in size
+                throttle_time = 'auto', -- minimum amount of time in milliseconds
+                -- that has to pass before starting new render
+            }
+            vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+            vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+        end,
+    },
+    {
+        'folke/noice.nvim',
+        event = 'VeryLazy',
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            'rcarriga/nvim-notify',
+        },
+        opts = {
+            cmdline = {
+                enabled = true,
+                view = 'cmdline_popup',
+                opts = {},
+                format = {
+                    search_down = { view = 'cmdline_popup' },
+                    search_up = { view = 'cmdline_popup' },
+                },
+            },
+            messages = {
+                enabled = true,
+            },
+            popupmenu = {
+                enabled = true,
+                backend = 'nui',
+            },
+            views = {
+                cmdline_popup = {
+                    position = {
+                        row = '80%',
+                        col = '50%',
+                    },
+                    size = {
+                        width = 60,
+                        height = 'auto',
+                    },
+                },
+            },
+            lsp = {
+                progress = { enabled = true },
+                override = {
+                    ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+                    ['vim.lsp.util.stylize_markdown'] = true,
+                    ['cmp.entry.get_documentation'] = true,
+                },
+            },
+            presets = {
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = true,
             },
         },
     },

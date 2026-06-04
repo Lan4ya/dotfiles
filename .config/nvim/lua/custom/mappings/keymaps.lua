@@ -4,7 +4,7 @@ local opts = { silent = true, noremap = true }
 
 -- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
-map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
+map('x', '<leader>P', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
@@ -132,7 +132,7 @@ map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 --------------------------------------- Plugin Mappings ---------------------------------------
 
 -- Nvim-Tree
-map('n', '<leader>n', function()
+map('n', '<leader>N', function()
     local nnp = require 'no-neck-pain'
     local nnp_state = require 'no-neck-pain.state'
     local nt_api = require 'nvim-tree.api'
@@ -160,10 +160,10 @@ map('n', '<leader>e', function()
     -- defer to give the UI time to close
     vim.defer_fn(function()
         nt_api.tree.focus()
-    end, 5)
+    end, 3)
 end, { desc = 'NvimTree focus window' })
 
-map('n', '<leader>N', function()
+map('n', '<leader>n', function()
     local nnp = require 'no-neck-pain'
     local nnp_state = require 'no-neck-pain.state'
     local nt_view = require 'nvim-tree.view'
@@ -186,7 +186,7 @@ map('n', '<leader>N', function()
     vim.defer_fn(function()
         nnp.resize(136)
         nnp.toggle_side 'right'
-    end, 5)
+    end, 3)
 end, { desc = 'NoNeckPain' })
 
 map('n', '<leader>r', function()
@@ -251,15 +251,6 @@ map('n', '<leader>ttjp', function()
     require('neotest').jump.prev { status = 'failed' }
 end, opts)
 
--- TodoComments
--- map('n', ']t', function()
---     require('todo-comments').jump_next()
--- end, { desc = 'Next todo comment' })
---
--- map('n', '[t', function()
---     require('todo-comments').jump_prev()
--- end, { desc = 'Previous todo comment' })
-
 -- Trouble
 map('n', '<leader>tl', '<cmd>Trouble loclist toggle focus=true<CR>', { desc = '[T]rouble [L]ocation List' })
 map('n', '<leader>tq', '<cmd>Trouble qflist toggle focus=true<CR>', { desc = '[T]rouble [Q]uickfix List' })
@@ -269,8 +260,6 @@ map('n', '<leader>tb', '<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<
 map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '[T]rouble [S]ymbols' })
 -- map('n', '<leader>tf', '<cmd>Trouble lsp toggle focus=true win.position=right<CR>', { desc = 'LSP Definitions / references / ... (Trouble)' })
 -- map('n', '<leader>tt', '<cmd>TodoTrouble<CR>', { desc = '[T]rouble [T]odo' }) -- Using telescope for this already
-
--- These 2 bindings are currently replaced by Trouble.nvim (idk might use them again in the future)
 
 -- Add current buffer diagnostics to location list with severity WARN or higher.
 -- map('n', '<leader>dl', function()
