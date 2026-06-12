@@ -5,7 +5,7 @@ local opts = { silent = true, noremap = true }
 -- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
 map('x', '<leader>P', [["_dP]], { desc = 'blackhole paste' })
-map({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'blackhole delete' })
+map({ 'n', 'v' }, '<leader>D', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
 map('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word in cursor' })
@@ -130,6 +130,13 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
 --------------------------------------- Plugin Mappings ---------------------------------------
+-- Vim Dadbod x UI
+map('n', '<leader>vdt', '<cmd>DBUIToggle<CR>')
+map('n', '<leader>vda', '<cmd>DBUIAddConnection<CR>')
+map('n', '<leader>vdf', '<cmd>DBUIFindBuffer<CR>')
+map('n', '<leader>vdr', '<cmd>DBUIRenameBuffer<CR>')
+map('n', '<leader>vdl', '<cmd>DBUILastQueryInfo<CR>')
+map('n', '<leader>vdh', '<cmd>DBUIHideNotifications<CR>')
 
 -- Nvim-Tree
 map('n', '<leader>N', function()
@@ -258,6 +265,7 @@ map('n', '<leader>tr', '<cmd>Trouble lsp toggle focus=true<CR>', { desc = 'LSP R
 map('n', '<leader>td', '<cmd>Trouble diagnostics toggle focus=true<CR>', { desc = '[T]rouble [D]iagnostics' })
 map('n', '<leader>tb', '<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<CR>', { desc = '[T]rouble [B]uffer Diagnostics' })
 map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '[T]rouble [S]ymbols' })
+
 -- map('n', '<leader>tf', '<cmd>Trouble lsp toggle focus=true win.position=right<CR>', { desc = 'LSP Definitions / references / ... (Trouble)' })
 -- map('n', '<leader>tt', '<cmd>TodoTrouble<CR>', { desc = '[T]rouble [T]odo' }) -- Using telescope for this already
 

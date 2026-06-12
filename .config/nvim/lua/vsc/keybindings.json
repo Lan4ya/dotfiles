@@ -348,7 +348,6 @@
     "when": "(neovim.mode == 'normal') && (editorTextFocus || !inputFocus)",
     "label": "Copy whole file",
   },
-
   {
     "key": "alt+k",
     "command": "vscode-neovim.send",

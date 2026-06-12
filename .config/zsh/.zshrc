@@ -36,11 +36,12 @@ zinit light romkatv/powerlevel10k
 
 # Add zsh snippets 
 
-zinit ice wait lucid 
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
+# zinit ice wait lucid 
 zinit snippet OMZP::git
 
-zinit ice wait lucid
-zinit snippet OMZP::archlinux
+# zinit ice wait lucid
+# zinit snippet OMZP::archlinux
 
 # zinit ice wait lucid
 # zinit snippet OMZP::command-not-found
@@ -97,8 +98,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # tmux sessionizers 
 # bindkey -s '\el' "tms\n" 
 bindkey -s '\en' "session-0\n" 
-bindkey -s '\ed' "tms switch\n" 
-bindkey -s '\ef' 'tmux-sessionizer\n' 
+bindkey -s '\ef' "tms switch\n" 
+bindkey -s '\ej' 'tmux-sessionizer\n' 
 
 # --------------------------------------------------------------------------
 
@@ -204,7 +205,7 @@ bindkey -M vicmd 'H' vi-put-before
 bindkey -M vicmd '\eh' paste_from_clipboard_put_after
 bindkey -M vicmd '\eH' paste_from_clipboard_put_before
 
-bindkey -M vicmd 'o' yank_to_clipboard #  custom widget
+bindkey -M vicmd 'o' yank_to_clipboard # custom widget
 bindkey -M vicmd 'O' vi-yank-whole-line     
 
 bindkey -M vicmd 'm' vi-open-line-below
@@ -213,7 +214,7 @@ bindkey -M vicmd 'M' vi-open-line-above
 bindkey -M vicmd 'y' set-mark-command
 bindkey -M vicmd 'Y' vi-join
 
-bindkey -M vicmd '\er' redo  # C-r is used by fzf so M-r instead
+bindkey -M vicmd '\er' redo # C-r is used by fzf-history-widget, so alt-r instead
 
 bindkey -M vicmd "gn" edit-command-line-nvim #  custom widget
 
@@ -229,24 +230,18 @@ bindkey -M visual 'P' end-of-line
 
 bindkey -M visual 'o' yank_to_clipboard #  custom widget
 
-# Insert Mode:
-bindkey -M viins '\ei' beginning-of-line
-bindkey -M viins '\eo' end-of-line
-
 # Emacs binding addons:
 bindkey -M viins '^P' history-search-backward
 bindkey -M viins '^N' history-search-forward
 bindkey -M viins '\ed' kill-word # del word after cursor
 bindkey -M viins '^K' kill-line # del line after cursor
-
 # Terminals/tty's already have ^W for del word before cursor and ^U for del line before cursor
 
 # --------------------------------------------------------------------------
 
 # reduce timeout for escape sequences
 KEYTIMEOUT=1
-
-setopt auto_cd
+# setopt auto_cd
 
 # History
 HISTSIZE=15000

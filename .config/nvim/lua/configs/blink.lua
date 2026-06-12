@@ -36,6 +36,7 @@ local opts = {
             lua = { inherit_defaults = true, 'lazydev' },
         },
         providers = {
+            -- lazydev = { name = 'lazydev', module = 'blink.cmp.sources.lazydev', score_offset = 100 },
             lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
     },
@@ -55,26 +56,46 @@ local opts = {
         ['<Down>'] = { 'select_next', 'fallback' },
 
         ['<Tab>'] = {
-            function()
-                if luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                    return true
+            function(cmp)
+                if cmp.is_visible() and not luasnip.expand_or_locally_jumpable() then
+                    return cmp.select_next()
                 end
             end,
-            'select_next',
+            'snippet_forward',
             'fallback',
         },
 
         ['<S-Tab>'] = {
-            function()
-                if luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                    return true
+            function(cmp)
+                if cmp.is_visible() and not luasnip.locally_jumpable(-1) then
+                    return cmp.select_prev()
                 end
             end,
-            'select_prev',
+            'snippet_backward',
             'fallback',
         },
+
+        -- ['<Tab>'] = {
+        --     function()
+        --         if luasnip.expand_or_jumpable() then
+        --             luasnip.expand_or_jump()
+        --             return true
+        --         end
+        --     end,
+        --     'select_next',
+        --     'fallback',
+        -- },
+        --
+        -- ['<S-Tab>'] = {
+        --     function()
+        --         if luasnip.jumpable(-1) then
+        --             luasnip.jump(-1)
+        --             return true
+        --         end
+        --     end,
+        --     'select_prev',
+        --     'fallback',
+        -- },
 
         ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
@@ -109,38 +130,76 @@ local opts = {
             winhighlight = 'Normal:None,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
             scrollbar = false,
             draw = {
-                treesitter = { 'lsp' },
+                treesitter = { 'lsp' }, -- 1.3.2
                 columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind' } },
                 components = {
-                    -- customize the drawing of kind icons
                     kind_icon = {
                         text = function(ctx)
-                            -- default kind icon
                             local icon = ctx.kind_icon
-                            -- if LSP source, check for color derived from documentation
+
+                            -- Extract color logic safely from LSP documentation strings
                             if ctx.item.source_name == 'LSP' then
                                 local color_item = require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
                                 if color_item and color_item.abbr ~= '' then
                                     icon = color_item.abbr
                                 end
                             end
-                            return icon .. ctx.icon_gap
+
+                            return icon
                         end,
                         highlight = function(ctx)
-                            -- default highlight group
                             local highlight = 'BlinkCmpKind' .. ctx.kind
-                            -- if LSP source, check for color derived from documentation
+
                             if ctx.item.source_name == 'LSP' then
                                 local color_item = require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
                                 if color_item and color_item.abbr_hl_group then
                                     highlight = color_item.abbr_hl_group
                                 end
                             end
+
+                            -- Check if item is selected. Prevents the selection cursor from hiding colors.
+                            if ctx.selected then
+                                return highlight .. 'Sel'
+                            end
+
                             return highlight
                         end,
                     },
                 },
             },
+            -- draw = {
+            --     treesitter = { 'lsp' },
+            --     columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind' } },
+            --     components = {
+            --         -- customize the drawing of kind icons
+            --         kind_icon = {
+            --             text = function(ctx)
+            --                 -- default kind icon
+            --                 local icon = ctx.kind_icon
+            --                 -- if LSP source, check for color derived from documentation
+            --                 if ctx.item.source_name == 'LSP' then
+            --                     local color_item = require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
+            --                     if color_item and color_item.abbr ~= '' then
+            --                         icon = color_item.abbr
+            --                     end
+            --                 end
+            --                 return icon .. ctx.icon_gap
+            --             end,
+            --             highlight = function(ctx)
+            --                 -- default highlight group
+            --                 local highlight = 'BlinkCmpKind' .. ctx.kind
+            --                 -- if LSP source, check for color derived from documentation
+            --                 if ctx.item.source_name == 'LSP' then
+            --                     local color_item = require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
+            --                     if color_item and color_item.abbr_hl_group then
+            --                         highlight = color_item.abbr_hl_group
+            --                     end
+            --                 end
+            --                 return highlight
+            --             end,
+            --         },
+            --     },
+            -- },
         },
     },
 
@@ -171,7 +230,7 @@ local opts = {
     cmdline = {
         enabled = true,
         keymap = {
-            preset = 'none',
+            preset = 'cmdline',
             ['<C-n>'] = { 'select_next', 'fallback' },
             ['<C-p>'] = { 'select_prev', 'fallback' },
 

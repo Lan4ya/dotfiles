@@ -37,6 +37,7 @@ local function on_attach(client, _)
 end
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('mason').setup()
 
