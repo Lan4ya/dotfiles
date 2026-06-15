@@ -55,25 +55,38 @@ _G.handle_harpoon_list = function()
     local current = normalize(vim.api.nvim_buf_get_name(0))
     local max = math.min(4, #items)
 
+    local filename_counts = {}
+
+    -- Count basenames
+    for _, item in ipairs(items) do
+        local value = item and item.value
+
+        if type(value) == 'string' and value ~= '' then
+            local filename = vim.fn.fnamemodify(normalize(value), ':t')
+            filename_counts[filename] = (filename_counts[filename] or 0) + 1
+        end
+    end
+
     local parts = {}
+
     for i = 1, max do
         local value = items[i] and items[i].value
+
         if type(value) == 'string' and value ~= '' then
             local full = normalize(value)
 
-            -- Extract filename and parent directory
             local filename = vim.fn.fnamemodify(full, ':t')
             local parent = vim.fn.fnamemodify(full, ':h:t')
 
-            -- Combine them if a valid parent directory exists
             local base = filename
-            if parent ~= '' and parent ~= '.' then
+
+            -- Only show parent directory when basename is duplicated
+            if filename_counts[filename] > 1 and parent ~= '' and parent ~= '.' then
                 base = parent .. '/' .. filename
             end
 
             local disp = (#base > 40) and (base:sub(1, 40) .. '…') or base
 
-            -- prepend number
             disp = i .. ':' .. disp
 
             if full == current then
@@ -86,6 +99,7 @@ _G.handle_harpoon_list = function()
 
     harpoon_list_cache = table.concat(parts, ' %#HarpoonDivider#|%#StatusLine# ')
 end
+
 -- _G.handle_harpoon_list = function()
 --     if not harpoon_ok or not harpoon then
 --         harpoon_list_cache = ''

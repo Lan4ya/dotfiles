@@ -220,7 +220,7 @@ return {
                 desc = 'Harpoon Jump 3',
             },
             {
-                '<leader>p',
+                '<leader>;',
                 function()
                     require('harpoon'):list():select(4)
                     vim.cmd 'doautocmd User HarpoonUpdated'
@@ -441,7 +441,8 @@ return {
         version = '^3.0.0',
         event = 'VeryLazy',
         config = function()
-            require 'configs.nvim_surround'
+            -- require 'configs.nvim_surround'
+            require('nvim-surround').setup {}
         end,
     },
 
