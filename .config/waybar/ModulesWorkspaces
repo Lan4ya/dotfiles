@@ -85,7 +85,6 @@
 		"8": "八",
 		"9": "九",
 		"10": "十",
-
 		"11": "一",
 		"12": "二",
 		"13": "三",
@@ -98,6 +97,7 @@
 		"20": "十",
 	}
 },
+
 // for Camilla or Spanish
 "hyprland/workspaces#cam": {
 	"active-only":false,
@@ -150,6 +150,7 @@
 		"default": "",
 	},
 },
+
 // NUMBERS and ICONS style with window rewrite 
 "hyprland/workspaces#rw": {
 	"disable-scroll": true,

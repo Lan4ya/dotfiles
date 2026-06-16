@@ -14,7 +14,7 @@ map('c', '<Down>', '<Nop>', opts)
 
 map('n', 'Q', '@@')
 
-map({ 'n', 'x' }, ';', ':', { noremap = true })
+map({ 'n', 'x' }, ';', ':', { noremap = true, silent = false })
 map({ 'n', 'x' }, ':', ',', opts)
 map({ 'n', 'x' }, ',', ';', opts)
 
