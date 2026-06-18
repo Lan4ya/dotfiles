@@ -27,12 +27,12 @@ function M.on_attach(bufnr)
     map('n', 's', api.node.open.edit, opts 'Select')
     map('n', 'v', api.node.open.vertical, opts 'Open: Vertical Split')
     map('n', 'h', api.node.open.horizontal, opts 'Open: Horizontal Split')
-    map('n', 'J', api.node.navigate.sibling.last, opts 'Last Sibling')
-    map('n', 'K', api.node.navigate.sibling.first, opts 'First Sibling')
+    map('n', 'K', api.node.navigate.sibling.last, opts 'Last Sibling')
+    map('n', 'L', api.node.navigate.sibling.first, opts 'First Sibling')
 
     -- Replacement bindings for the removed ones.
     map('n', 'J', api.node.open.toggle_group_empty, opts 'Toggle Group Empty')
-    map('n', '<C-s>', api.node.run.system, opts 'Run System')
+    map('n', '<C-Enter>', api.node.run.system, opts 'Run System')
     map('n', '<C-s>', api.node.show_info_popup, opts 'Show Info')
 end
 

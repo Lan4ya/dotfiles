@@ -103,6 +103,26 @@ bindkey -s '\ej' 'tmux-sessionizer\n'
 
 # --------------------------------------------------------------------------
 
+# Emacs Mode
+# bindkey -e  
+
+# Some useful emacs bindings for nav/editing: 
+
+# M-b → move backward word
+# M-f → move forward word
+# M-d → del word after cursor
+
+# "C-a: Move to BOL
+# "C-e: Move to EOL
+# "C-k: Delete from cursor to EOL
+# "C-y: Paste the previously deleted text."
+
+# Built in tty bindings:
+# "C-w: Delete word beofre cursor 
+# "C-u: Delete from cursor to BOL 
+
+# --------------------------------------------------------------------------
+
 # Vi Mode 
 bindkey -v   
 
@@ -110,7 +130,7 @@ bindkey -v
 autoload -U select-word-style
 select-word-style bash  
 
-# Some qol functions for better vimming in cli
+# Some qol functions for better vimming
 move-to-middle-of-line() {
   local line=$BUFFER
   local len=${#line}
@@ -119,7 +139,7 @@ move-to-middle-of-line() {
 
 yank_to_clipboard() {
   zle vi-yank # yank normally
-  print -rn -- "$CUTBUFFER" | wl-copy # yank also to clipboard 
+  print -rn -- "$CUTBUFFER" | wl-copy # yank also to clipboard (use xclip for x11)  
 }
 
 yank_whole_line_to_clipboard() {
@@ -127,11 +147,25 @@ yank_whole_line_to_clipboard() {
   print -rn -- "$CUTBUFFER" | wl-copy 
 }
 
-# This is so good it's criminal
-edit-cli-in-nvim() {
+paste_from_clipboard_put_before() {
+  local clip
+  clip=$(wl-paste 2>/dev/null) || return 1
+  LBUFFER+="$clip"
+}
+
+paste_from_clipboard_put_after() {
+  local clip
+  clip=$(wl-paste 2>/dev/null) || return 1
+  # if not at end, move over one char
+  (( CURSOR < ${#BUFFER} )) && zle vi-forward-char
+  LBUFFER+="$clip"
+}
+
+# this is so good it's criminal
+edit_cli_in_nvim() {
   local tmpfile=$(mktemp /tmp/nvedit.XXXXXX)
 
-  # Dump current buffer (what is typed so far) into tmpfile
+  # Dump current buffer (what you typed so far) into tmpfile
   print -rn -- "$BUFFER" > "$tmpfile"
 
   # Open in nvim (blocking)
@@ -145,17 +179,65 @@ edit-cli-in-nvim() {
   zle reset-prompt
 }
 
-zle -N edit-cli-in-nvim
+zle -N edit_cli_in_nvim
+zle -N paste_from_clipboard_put_before
+zle -N paste_from_clipboard_put_after
 zle -N move-to-middle-of-line
 zle -N yank_to_clipboard
+zle -N yank_whole_line_to_clipboard
+
+# Normal Mode:
+bindkey -M vicmd n vi-backward-word        
+bindkey -M vicmd N vi-backward-blank-word  
+
+bindkey -M vicmd b vi-repeat-search        
+bindkey -M vicmd B vi-rev-repeat-search    
+
+bindkey -M vicmd 'j' backward-char
+bindkey -M vicmd 'J' beginning-of-line
+
+bindkey -M vicmd 'k' down-line-or-history
+
+bindkey -M vicmd 'l' up-line-or-history
+bindkey -M vicmd 'L' move-to-middle-of-line 
+
+bindkey -M vicmd 'p' forward-char
+bindkey -M vicmd 'P' end-of-line
+
+# bindkey -M vicmd 'h' vi-put-after    
+# bindkey -M vicmd 'H' vi-put-before
+bindkey -M vicmd 'h' paste_from_clipboard_put_after 
+bindkey -M vicmd 'H' paste_from_clipboard_put_before 
+
+# bindkey -M vicmd '\eh' paste_from_clipboard_put_after
+# bindkey -M vicmd '\eH' paste_from_clipboard_put_before
+
+bindkey -M vicmd 'o' yank_to_clipboard 
+bindkey -M vicmd 'O' yank_whole_line_to_clipboard 
+
+bindkey -M vicmd 'm' vi-open-line-below
+bindkey -M vicmd 'M' vi-open-line-above
+
+bindkey -M vicmd 'y' set-mark-command
+bindkey -M vicmd 'Y' vi-join
 
 bindkey -M vicmd '\er' redo # C-r is used by fzf-history-widget, so alt-r instead
 
-bindkey -M vicmd "gn" edit-command-line-nvim 
-bindkey -M visual 'y' yank_to_clipboard 
-bindkey -M visual 'Y' yank_whole_line_to_clipboard
+bindkey -M vicmd "gn" edit_cli_in_nvim 
 
-# Emacs binding addons to vi insert mode:
+# Visual Mode:
+bindkey -M visual 'j' vi-backward-char
+bindkey -M visual 'k' down-line
+bindkey -M visual 'l' up-line
+bindkey -M visual 'p' vi-forward-char
+
+bindkey -M visual 'J' beginning-of-line
+bindkey -M visual 'L' move-to-middle-line #  custom widget
+bindkey -M visual 'P' end-of-line
+
+bindkey -M visual 'o' yank_to_clipboard #  custom widget
+
+# Emacs binding addons:
 bindkey -M viins '^P' history-search-backward
 bindkey -M viins '^N' history-search-forward
 bindkey -M viins '\ed' kill-word # del word after cursor

@@ -1,0 +1,22 @@
+local colors = {
+	background = "rgb(1E1E1F)",
+	foreground = "rgb(C2CAD6)",
+	color0 = "rgb(444446)",
+	color1 = "rgb(15161C)",
+	color2 = "rgb(1D202B)",
+	color3 = "rgb(1E212C)",
+	color4 = "rgb(202430)",
+	color5 = "rgb(3C4B64)",
+	color6 = "rgb(3E4E68)",
+	color7 = "rgb(A0ABBC)",
+	color8 = "rgb(707884)",
+	color9 = "rgb(1C1D25)",
+	color10 = "rgb(272B3A)",
+	color11 = "rgb(282C3B)",
+	color12 = "rgb(2B3040)",
+	color13 = "rgb(4F6485)",
+	color14 = "rgb(52688A)",
+	color15 = "rgb(A0ABBC)",
+}
+
+return colors

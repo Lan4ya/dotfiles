@@ -18,7 +18,7 @@ local opts =
         end,
         extensions = { scope = {} },
     },
-    -- not really used much since it's set to auto
+    -- not really used much since it's set to auto. just in 💼
     vim.keymap.set('n', '<leader>RS', resession.save)
 vim.keymap.set('n', '<leader>RL', resession.load)
 vim.keymap.set('n', '<leader>RD', resession.delete)

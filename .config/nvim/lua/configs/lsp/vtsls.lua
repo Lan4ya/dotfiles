@@ -4,18 +4,9 @@ return {
     settings = {
         typescript = {
             updateImportsOnFileMove = { enabled = 'always' },
-            -- tsserver = {
-            --     maxTsServerMemory = 2048, -- Increase memory limit to 2GB
-            -- },
-            hover = {
-                maximumLength = 10000,
-            },
         },
         javascript = {
             updateImportsOnFileMove = { enabled = 'always' },
-            hover = {
-                maximumLength = 10000,
-            },
         },
     },
 

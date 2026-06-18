@@ -1,3 +1,0 @@
-(afjadsfjasfjas) => {
-  return dapjfajfdjfjas;
-};

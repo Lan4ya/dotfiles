@@ -69,11 +69,12 @@
 "hyprland/workspaces#kanji": {
 	"disable-scroll": true,
 	"show-special": false,
-	"all-outputs": false, // make this true if only one monitor and/or not using split workspaces plugin (maybe? idk still)
+	"all-outputs": false, // False makes each monitor shows only its own workspaces. Good when using split-monitor-workspaces
 	"format": "{icon}",
     "persistent-workspaces": {
       "*": 0
 	},
+	"on-click": "hyprctl eval 'local id = tonumber(\"{name}\"); local ws = (id - 1) % 10 + 1; hl.dispatch(require(\"plugins.split-monitor-workspaces\").focus_workspace(ws))'",
 	"format-icons": {
 		"1": "一",
 		"2": "二",
@@ -85,6 +86,7 @@
 		"8": "八",
 		"9": "九",
 		"10": "十",
+
 		"11": "一",
 		"12": "二",
 		"13": "三",
@@ -95,7 +97,7 @@
 		"18": "八",
 		"19": "九",
 		"20": "十",
-	}
+	},
 },
 
 // for Camilla or Spanish

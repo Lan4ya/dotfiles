@@ -14,36 +14,36 @@ map('c', '<Down>', '<Nop>', opts)
 
 map('n', 'Q', '@@')
 
-map({ 'n', 'x' }, ';', ':', { noremap = true, silent = false })
+map({ 'n', 'x' }, ';', ':', { noremap = true })
 map({ 'n', 'x' }, ':', ',', opts)
 map({ 'n', 'x' }, ',', ';', opts)
 
--- map({ 'n', 'x', 'o' }, 'j', 'h', opts)
--- map({ 'n', 'x', 'o' }, 'p', 'l', opts)
---
--- map({ 'o' }, 'k', 'j', opts)
--- map({ 'o' }, 'l', 'k', opts)
-map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map({ 'n', 'x', 'o' }, 'j', 'h', opts)
+map({ 'n', 'x', 'o' }, 'p', 'l', opts)
 
--- map({ 'n', 'x', 'o' }, 'h', 'p', opts)
--- map({ 'n', 'x', 'o' }, 'H', 'P', opts)
---
--- map({ 'n', 'v', 'x', 'o' }, 'J', 'H', opts)
--- map('n', 'K', function()
---     vim.lsp.buf.hover { border = 'rounded' }
--- end)
--- map({ 'n', 'x' }, 'L', 'M', opts)
--- map({ 'n', 'x', 'o' }, 'P', 'L', opts)
---
--- map({ 'n', 'x', 'o' }, 'b', 'nzzzv', opts)
--- map({ 'n', 'x', 'o' }, 'B', 'Nzzzv', opts)
--- map({ 'n', 'x', 'o' }, 'n', 'b', opts)
--- map({ 'n', 'x', 'o' }, 'N', 'B', opts)
---
--- map({ 'n', 'x', 'o' }, 'o', 'y', opts)
--- map({ 'n', 'x', 'o' }, 'O', 'y$', opts)
--- map({ 'n', 'x', 'o' }, 'm', 'o', opts)
--- map({ 'n', 'x', 'o' }, 'M', 'O', opts)
--- map({ 'n', 'x', 'o' }, 'y', 'm', opts)
--- map({ 'n', 'x', 'o' }, 'Y', 'J', opts)
+map({ 'o' }, 'k', 'j', opts)
+map({ 'o' }, 'l', 'k', opts)
+map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ 'n', 'x' }, 'l', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
+map({ 'n', 'x', 'o' }, 'h', 'p', opts)
+map({ 'n', 'x', 'o' }, 'H', 'P', opts)
+
+map({ 'n', 'v', 'x', 'o' }, 'J', 'H', opts)
+map('n', 'K', function()
+    vim.lsp.buf.hover { border = 'rounded' }
+end)
+map({ 'n', 'x' }, 'L', 'M', opts)
+map({ 'n', 'x', 'o' }, 'P', 'L', opts)
+
+map({ 'n', 'x', 'o' }, 'b', 'nzzzv', opts)
+map({ 'n', 'x', 'o' }, 'B', 'Nzzzv', opts)
+map({ 'n', 'x', 'o' }, 'n', 'b', opts)
+map({ 'n', 'x', 'o' }, 'N', 'B', opts)
+
+map({ 'n', 'x', 'o' }, 'o', 'y', opts)
+map({ 'n', 'x', 'o' }, 'O', 'y$', opts)
+map({ 'n', 'x', 'o' }, 'm', 'o', opts)
+map({ 'n', 'x', 'o' }, 'M', 'O', opts)
+map({ 'n', 'x', 'o' }, 'y', 'm', opts)
+map({ 'n', 'x', 'o' }, 'Y', 'J', opts)

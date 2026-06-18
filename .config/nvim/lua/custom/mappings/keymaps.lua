@@ -2,15 +2,14 @@ local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 local opts = { silent = true, noremap = true }
 
--- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
+map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
-map('x', '<leader><leader>p', [["_dP]], { desc = 'blackhole paste' })
-map({ 'n', 'v' }, '<leader><leader>d', [["_d]], { desc = 'blackhole delete' })
+map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
+map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
-map('n', '<leader>s', '<cmd>w<cr>')
-map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word in cursor' })
-map('n', '<leader>q', '<cmd>qa<cr>')
+map('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute word in cursor' })
+map('n', '<leader>q', '<cmd>qa<CR>')
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
 -- map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'dictionary' })
@@ -20,14 +19,14 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 map({ 'n', 'x', 'o' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 map({ 'n', 'x', 'o' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
 
-map('n', '<leader><leader>s', '<cmd>restart<CR>')
+map('n', '<leader><leader>r', '<cmd>restart<CR>')
 
 map('i', '<M-i>', '<ESC>^i', { remap = true, desc = 'move beginning of line' })
 map('i', '<M-o>', '<End>', { remap = true, desc = 'move end of line' })
 map('i', '<M-d>', '<C-o>dw', { remap = true, desc = 'del word after cursor' })
 
-map({ 'n', 'x' }, '<M-j>', '<C-d>zz', opts)
-map({ 'n', 'x' }, '<M-k>', '<C-u>zz', opts)
+map({ 'n', 'x' }, '<M-k>', '<C-d>zz', opts)
+map({ 'n', 'x' }, '<M-l>', '<C-u>zz', opts)
 
 map('n', '=ap', "ma=ap'a")
 
@@ -38,12 +37,12 @@ map('n', '<leader>/', 'gcc', { desc = 'Toggle Comment', remap = true })
 map('x', '<leader>/', 'gc', { desc = 'Toggle Comment', remap = true })
 
 -- Move Line/s Up/Down
-map('n', '<M-J>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
-map('i', '<M-J>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
-map('x', '<M-J>', ":move '>+1<CR>gv-gv", opts)
-map('n', '<M-K>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
-map('i', '<M-K>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
-map('x', '<M-K>', ":move '<-2<CR>gv-gv", opts)
+map('n', '<M-K>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
+map('i', '<M-K>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
+map('x', '<M-K>', ":move '>+1<CR>gv-gv", opts)
+map('n', '<M-L>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
+map('i', '<M-L>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
+map('x', '<M-L>', ":move '<-2<CR>gv-gv", opts)
 
 -- Better indent
 map('v', '<', '<gv', { remap = true })
@@ -104,10 +103,10 @@ map({ 'n', 'x' }, '<C-w>l', '<Nop>')
 map({ 'n', 'x' }, '<C-w><C-l>', '<Nop>')
 
 -- map new window navigations
-map({ 'n', 'x' }, '<C-h>', '<C-w>h')
-map({ 'n', 'x' }, '<C-j>', '<C-w>j')
-map({ 'n', 'x' }, '<C-k>', '<C-w>k')
-map({ 'n', 'x' }, '<C-l>', '<C-w>l')
+map({ 'n', 'x' }, '<C-j>', '<C-w>h')
+map({ 'n', 'x' }, '<C-k>', '<C-w>j')
+map({ 'n', 'x' }, '<C-l>', '<C-w>k')
+map({ 'n', 'x' }, '<C-p>', '<C-w>l')
 
 -- map({ 'n', 'x' }, '<C-w>j', '<C-w>h')
 -- map({ 'n', 'x' }, '<C-w><C-j>', '<C-w>h')
@@ -131,7 +130,7 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
 --------------------------------------- Plugin Mappings ---------------------------------------
--- Vim Dadbod x DBUI
+-- Vim Dadbod x UI
 map('n', '<leader>dbt', '<cmd>DBUIToggle<CR>')
 map('n', '<leader>dba', '<cmd>DBUIAddConnection<CR>')
 map('n', '<leader>dbf', '<cmd>DBUIFindBuffer<CR>')
@@ -378,7 +377,7 @@ map('n', '[d', function()
     diag.jump { count = -1, float = true }
 end, { desc = 'Go to [P]rev diagnostic' })
 
-map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
+-- map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
 map('n', '<M-t>', function()
     vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
 end, { desc = '[T]oggle [D]iagnostics Text' })
