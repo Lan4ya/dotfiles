@@ -9,53 +9,54 @@ harpoon:setup {
     },
 }
 
--- local map = vim.keymap.set
+local map = vim.keymap.set
 
--- map('n', '<leader>h', function()
---     harpoon.ui:toggle_quick_menu(harpoon:list())
--- end)
---
--- map('n', '<leader>.', function()
---     harpoon:list():add()
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end)
---
--- map('n', '<leader>j', function()
---     harpoon:list():select(1)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 1' })
---
--- map('n', '<leader>k', function()
---     harpoon:list():select(2)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 2' })
---
--- map('n', '<leader>l', function()
---     harpoon:list():select(3)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 3' })
---
--- map('n', '<leader>p', function()
---     harpoon:list():select(4)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 4' })
+local function reverse_harpoon_list()
+    local list = require('harpoon'):list()
+    local items = list.items
 
--- map('n', '<M-j>', function()
---     harpoon:list():select(1)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 1' })
---
--- map('n', '<M-k>', function()
---     harpoon:list():select(2)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 2' })
---
--- map('n', '<M-l>', function()
---     harpoon:list():select(3)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 3' })
---
--- map('n', '<M-p>', function()
---     harpoon:list():select(4)
---     vim.cmd 'doautocmd User HarpoonUpdated'
--- end, { desc = 'Harpoon: Jump to file 4' })
+    for i = 1, math.floor(#items / 2) do
+        items[i], items[#items - i + 1] = items[#items - i + 1], items[i]
+    end
+
+    vim.cmd.redrawstatus()
+end
+
+map('n', '<leader>r', function()
+    reverse_harpoon_list()
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end, { desc = 'Harpoon reverse list' })
+
+map('n', '<leader>h', function()
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+
+map('n', '<leader>.', function()
+    harpoon:list():add()
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end)
+
+map('n', '<leader>j', function()
+    harpoon:list():select(1)
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end, { desc = 'Harpoon: Jump to file 1' })
+
+map('n', '<leader>k', function()
+    harpoon:list():select(2)
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end, { desc = 'Harpoon: Jump to file 2' })
+
+map('n', '<leader>l', function()
+    harpoon:list():select(3)
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end, { desc = 'Harpoon: Jump to file 3' })
+
+map('n', '<leader>p', function()
+    harpoon:list():select(4)
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end, { desc = 'Harpoon: Jump to file 4' })
+
+map('n', '<leader>m', function()
+    harpoon:list():select(5)
+    vim.cmd 'doautocmd User HarpoonUpdated'
+end, { desc = 'Harpoon: Jump to file 5' })

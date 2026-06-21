@@ -179,55 +179,55 @@ return {
     {
         'ThePrimeagen/harpoon',
         branch = 'harpoon2',
-        keys = {
-            {
-                '<leader>h',
-                function()
-                    require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
-                end,
-                desc = 'Harpoon Menu',
-            },
-            {
-                '<leader>.',
-                function()
-                    require('harpoon'):list():add()
-                    vim.cmd 'doautocmd User HarpoonUpdated'
-                end,
-                desc = 'Harpoon Add',
-            },
-            {
-                '<leader>j',
-                function()
-                    require('harpoon'):list():select(1)
-                    vim.cmd 'doautocmd User HarpoonUpdated'
-                end,
-                desc = 'Harpoon Jump 1',
-            },
-            {
-                '<leader>k',
-                function()
-                    require('harpoon'):list():select(2)
-                    vim.cmd 'doautocmd User HarpoonUpdated'
-                end,
-                desc = 'Harpoon Jump 2',
-            },
-            {
-                '<leader>l',
-                function()
-                    require('harpoon'):list():select(3)
-                    vim.cmd 'doautocmd User HarpoonUpdated'
-                end,
-                desc = 'Harpoon Jump 3',
-            },
-            {
-                '<leader>p',
-                function()
-                    require('harpoon'):list():select(4)
-                    vim.cmd 'doautocmd User HarpoonUpdated'
-                end,
-                desc = 'Harpoon Jump 4',
-            },
-        },
+        -- keys = {
+        --     {
+        --         '<leader>h',
+        --         function()
+        --             require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+        --         end,
+        --         desc = 'Harpoon Menu',
+        --     },
+        --     {
+        --         '<leader>.',
+        --         function()
+        --             require('harpoon'):list():add()
+        --             vim.cmd 'doautocmd User HarpoonUpdated'
+        --         end,
+        --         desc = 'Harpoon Add',
+        --     },
+        --     {
+        --         '<leader>j',
+        --         function()
+        --             require('harpoon'):list():select(1)
+        --             vim.cmd 'doautocmd User HarpoonUpdated'
+        --         end,
+        --         desc = 'Harpoon Jump 1',
+        --     },
+        --     {
+        --         '<leader>k',
+        --         function()
+        --             require('harpoon'):list():select(2)
+        --             vim.cmd 'doautocmd User HarpoonUpdated'
+        --         end,
+        --         desc = 'Harpoon Jump 2',
+        --     },
+        --     {
+        --         '<leader>l',
+        --         function()
+        --             require('harpoon'):list():select(3)
+        --             vim.cmd 'doautocmd User HarpoonUpdated'
+        --         end,
+        --         desc = 'Harpoon Jump 3',
+        --     },
+        --     {
+        --         '<leader>p',
+        --         function()
+        --             require('harpoon'):list():select(4)
+        --             vim.cmd 'doautocmd User HarpoonUpdated'
+        --         end,
+        --         desc = 'Harpoon Jump 4',
+        --     },
+        -- },
         config = function()
             require 'configs.harpoon'
         end,
@@ -498,95 +498,6 @@ return {
             require 'configs.copilot'
         end,
     },
-    {
-        'folke/noice.nvim',
-        event = 'VeryLazy',
-        dependencies = {
-            {
-                'MunifTanjim/nui.nvim',
-                module = 'nui',
-            },
-        },
-    },
-    {
-        'toppair/peek.nvim',
-        event = { 'VeryLazy' },
-        build = 'deno task --quiet build:fast',
-        config = function()
-            require('peek').setup {
-                auto_load = true, -- whether to automatically load preview when
-                -- entering another markdown buffer
-                close_on_bdelete = true, -- close preview window on buffer delete
-                syntax = true, -- enable syntax highlighting, affects performance
-                theme = 'dark', -- 'dark' or 'light'
-                update_on_change = true,
-                app = 'browser', -- 'webview', 'browser', string or a table of strings
-                -- explained below
-                filetype = { 'markdown' }, -- list of filetypes to recognize as markdown
-                -- relevant if update_on_change is true
-                throttle_at = 200000, -- start throttling when file exceeds this
-                -- amount of bytes in size
-                throttle_time = 'auto', -- minimum amount of time in milliseconds
-                -- that has to pass before starting new render
-            }
-            vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
-            vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
-        end,
-    },
-    --
-    -- {
-    --     'folke/noice.nvim',
-    --     event = 'VeryLazy',
-    --     dependencies = {
-    --         'MunifTanjim/nui.nvim',
-    --         'rcarriga/nvim-notify',
-    --     },
-    --     opts = {
-    --         cmdline = {
-    --             enabled = true,
-    --             view = 'cmdline_popup',
-    --             opts = {},
-    --             format = {
-    --                 search_down = { view = 'cmdline_popup' },
-    --                 search_up = { view = 'cmdline_popup' },
-    --             },
-    --         },
-    --         messages = {
-    --             enabled = true,
-    --         },
-    --         popupmenu = {
-    --             enabled = true,
-    --             backend = 'nui',
-    --         },
-    --         views = {
-    --             cmdline_popup = {
-    --                 position = {
-    --                     row = '60%',
-    --                     col = '50%',
-    --                 },
-    --                 size = {
-    --                     width = 60,
-    --                     height = 'auto',
-    --                 },
-    --             },
-    --         },
-    --         lsp = {
-    --             progress = { enabled = true },
-    --             override = {
-    --                 ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-    --                 ['vim.lsp.util.stylize_markdown'] = true,
-    --                 ['cmp.entry.get_documentation'] = true,
-    --             },
-    --         },
-    --         presets = {
-    --             bottom_search = true,
-    --             command_palette = true,
-    --             long_message_to_split = true,
-    --             inc_rename = false,
-    --             lsp_doc_border = true,
-    --         },
-    --     },
-    -- },
 
     {
         'kristijanhusak/vim-dadbod-ui',

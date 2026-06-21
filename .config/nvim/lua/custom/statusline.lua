@@ -53,7 +53,7 @@ _G.handle_harpoon_list = function()
     local list = harpoon:list()
     local items = (list and list.items) or {}
     local current = normalize(vim.api.nvim_buf_get_name(0))
-    local max = math.min(4, #items)
+    local max = math.min(5, #items)
 
     local filename_counts = {}
 
@@ -154,7 +154,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
     end,
 })
 
-vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
+vim.api.nvim_create_autocmd({ 'DiagnosticChanged', 'BufEnter' }, {
     callback = function()
         handle_diagnostic_list()
         vim.cmd.redrawstatus()

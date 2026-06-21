@@ -1,4 +1,5 @@
 ---@module 'hl'
+
 hl.env("EDITOR", "nvim")
 -- env = WLR_LIBINPUT_SCROLL_FACTOR, 1.0
 
@@ -11,10 +12,6 @@ hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("CLUTTER_BACKEND", "wayland")
 
 --Run SDL2 applications on Wayland.
-
---Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
-
---env = SDL_VIDEODRIVER,wayland
 
 -- xdg specifications
 

@@ -142,8 +142,8 @@ yank_to_clipboard() {
   print -rn -- "$CUTBUFFER" | wl-copy # yank also to clipboard (use xclip for x11)  
 }
 
-yank_whole_line_to_clipboard() {
-  vi-yank-whole-line     
+yank_eol_to_clipboard() {
+  zle vi-yank-eol
   print -rn -- "$CUTBUFFER" | wl-copy 
 }
 
@@ -184,7 +184,7 @@ zle -N paste_from_clipboard_put_before
 zle -N paste_from_clipboard_put_after
 zle -N move-to-middle-of-line
 zle -N yank_to_clipboard
-zle -N yank_whole_line_to_clipboard
+zle -N yank_eol_to_clipboard
 
 # Normal Mode:
 bindkey -M vicmd n vi-backward-word        
@@ -213,7 +213,7 @@ bindkey -M vicmd 'H' paste_from_clipboard_put_before
 # bindkey -M vicmd '\eH' paste_from_clipboard_put_before
 
 bindkey -M vicmd 'o' yank_to_clipboard 
-bindkey -M vicmd 'O' yank_whole_line_to_clipboard 
+bindkey -M vicmd 'O' yank_eol_to_clipboard 
 
 bindkey -M vicmd 'm' vi-open-line-below
 bindkey -M vicmd 'M' vi-open-line-above

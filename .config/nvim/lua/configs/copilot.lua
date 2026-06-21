@@ -8,7 +8,7 @@ require('copilot').setup {
         enabled = true,
         auto_trigger = true,
         hide_during_completion = true,
-        debounce = 120,
+        debounce = 80,
         keymap = {
             accept = '<M-l>',
             dismiss = '<C-k>',

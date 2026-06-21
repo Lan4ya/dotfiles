@@ -71,10 +71,9 @@
 	"show-special": false,
 	"all-outputs": false, // False makes each monitor shows only its own workspaces. Good when using split-monitor-workspaces
 	"format": "{icon}",
-    "persistent-workspaces": {
-      "*": 0
+  "persistent-workspaces": {
+      "*": 10
 	},
-	"on-click": "hyprctl eval 'local id = tonumber(\"{name}\"); local ws = (id - 1) % 10 + 1; hl.dispatch(require(\"plugins.split-monitor-workspaces\").focus_workspace(ws))'",
 	"format-icons": {
 		"1": "一",
 		"2": "二",
@@ -86,7 +85,6 @@
 		"8": "八",
 		"9": "九",
 		"10": "十",
-
 		"11": "一",
 		"12": "二",
 		"13": "三",
@@ -98,6 +96,7 @@
 		"19": "九",
 		"20": "十",
 	},
+	"on-click": "hyprctl dispatch hl.dsp.focus '{id}'",
 },
 
 // for Camilla or Spanish

@@ -2,13 +2,14 @@ local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 local opts = { silent = true, noremap = true }
 
-map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
+-- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
 map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
-map('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute word in cursor' })
+map('n', '<leader>s', '<cmd>w<cr>')
+map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute word in cursor' })
 map('n', '<leader>q', '<cmd>qa<CR>')
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
@@ -51,6 +52,12 @@ map('v', '>', '>gv', { remap = true })
 -- Terminal
 map({ 'n', 't' }, '<M-i>', function()
     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
+end, { desc = 'toggle floating term' })
+map({ 'n', 't' }, '<M-m>', function()
+    require('custom.terminal').toggle { pos = 'sp', id = 'splitTerm' }
+end, { desc = 'toggle floating term' })
+map({ 'n', 't' }, '<M-v>', function()
+    require('custom.terminal').toggle { pos = 'vsp', id = 'verticalSplitTerm' }
 end, { desc = 'toggle floating term' })
 map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
@@ -167,7 +174,7 @@ map('n', '<leader>e', function()
     -- defer to give the UI time to close
     vim.defer_fn(function()
         nt_api.tree.focus()
-    end, 3)
+    end, 5)
 end, { desc = 'NvimTree focus window' })
 
 map('n', '<leader>n', function()
@@ -193,12 +200,8 @@ map('n', '<leader>n', function()
     vim.defer_fn(function()
         nnp.resize(136)
         nnp.toggle_side 'right'
-    end, 3)
+    end, 5)
 end, { desc = 'NoNeckPain' })
-
-map('n', '<leader>r', function()
-    require('snacks').rename.rename_file()
-end, { desc = 'Rename Current File' })
 
 map('n', '<M-o>', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
@@ -377,7 +380,7 @@ map('n', '[d', function()
     diag.jump { count = -1, float = true }
 end, { desc = 'Go to [P]rev diagnostic' })
 
--- map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
+map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
 map('n', '<M-t>', function()
     vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
 end, { desc = '[T]oggle [D]iagnostics Text' })

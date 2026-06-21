@@ -5,8 +5,8 @@ local mainMod = "SUPER"
 local home = os.getenv("HOME")
 local scriptsDir = home .. "/.config/hypr/scripts"
 local UserScripts = home .. "/.config/hypr/UserScripts"
-local UserConfigs = home .. "/.config/hypr/UserConfigs"
-local hypr = home .. "/.config/hypr"
+-- local UserConfigs = home .. "/.config/hypr/UserConfigs"
+-- local hypr = home .. "/.config/hypr"
 
 -- Exit Hyprland
 hl.bind("CTRL + SHIFT + ALT + Delete", hl.dsp.exec_cmd("hyprctl dispatch exit 0"))
@@ -109,14 +109,11 @@ hl.bind(mainMod .. " + U", hl.dsp.workspace.toggle_special(nil))
 
 local smw = require("plugins.split-monitor-workspaces")
 
--- Move active window to the next monitor and switch focus
-hl.bind(
-	mainMod .. " + SHIFT + i",
-	hl.dsp.exec_cmd("hyprctl dispatch movewindow monitor next; hyprctl dispatch focusmonitor next")
-)
+-- Move active window to the next monitor and keep focus
+hl.bind(mainMod .. " + i", hl.dsp.window.move({ monitor = "+1", follow = false }))
 
--- Move active window to the next monitor silently (keep focus)
-hl.bind(mainMod .. " + i", hl.dsp.exec_cmd("hyprctl dispatch movewindow monitor next"))
+-- Move active window to the next monitor and switch focus
+hl.bind(mainMod .. " + SHIFT + i", hl.dsp.window.move({ monitor = "+1" }))
 
 -- SHIFT key mapping: non‑sequential mapping (due to keyd remap)
 local shift_map = {
@@ -195,10 +192,9 @@ end
 --]]
 
 -- DEFAULT VARS
-local files = "thunar"
+-- local files = "thunar"
 local code = "code --use-gl=desktop"
 -- $spotify = env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --uri=%U # spotify no ads
-local files = "thunar /home/maya/Downloads/"
 
 -- COMMON SHORTCUTS
 --bindr = $mainMod, $mainMod_L, exec, pkill rofi || rofi -show drun -modi drun,filebrowser,run,window # Super Key to Launch rofi menu
