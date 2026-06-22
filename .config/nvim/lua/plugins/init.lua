@@ -87,7 +87,7 @@ return {
         event = { 'BufReadPre', 'BufNewFile' },
     },
 
-    -- auto pair paren, brackets, quotes, etc.
+    -- auto pair paren, quotes, etc.
     {
         'windwp/nvim-autopairs',
         event = { 'InsertEnter' },
@@ -102,7 +102,6 @@ return {
     },
 
     -- git integrations
-
     {
         'tpope/vim-fugitive',
         cmd = { 'G', 'Git' },
@@ -179,55 +178,7 @@ return {
     {
         'ThePrimeagen/harpoon',
         branch = 'harpoon2',
-        -- keys = {
-        --     {
-        --         '<leader>h',
-        --         function()
-        --             require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
-        --         end,
-        --         desc = 'Harpoon Menu',
-        --     },
-        --     {
-        --         '<leader>.',
-        --         function()
-        --             require('harpoon'):list():add()
-        --             vim.cmd 'doautocmd User HarpoonUpdated'
-        --         end,
-        --         desc = 'Harpoon Add',
-        --     },
-        --     {
-        --         '<leader>j',
-        --         function()
-        --             require('harpoon'):list():select(1)
-        --             vim.cmd 'doautocmd User HarpoonUpdated'
-        --         end,
-        --         desc = 'Harpoon Jump 1',
-        --     },
-        --     {
-        --         '<leader>k',
-        --         function()
-        --             require('harpoon'):list():select(2)
-        --             vim.cmd 'doautocmd User HarpoonUpdated'
-        --         end,
-        --         desc = 'Harpoon Jump 2',
-        --     },
-        --     {
-        --         '<leader>l',
-        --         function()
-        --             require('harpoon'):list():select(3)
-        --             vim.cmd 'doautocmd User HarpoonUpdated'
-        --         end,
-        --         desc = 'Harpoon Jump 3',
-        --     },
-        --     {
-        --         '<leader>p',
-        --         function()
-        --             require('harpoon'):list():select(4)
-        --             vim.cmd 'doautocmd User HarpoonUpdated'
-        --         end,
-        --         desc = 'Harpoon Jump 4',
-        --     },
-        -- },
+        event = 'VeryLazy',
         config = function()
             require 'configs.harpoon'
         end,
@@ -361,50 +312,11 @@ return {
         event = { 'BufReadPre', 'BufNewFile' },
         cmd = { 'TSManager' },
         config = function()
-            local tsm = require 'tree-sitter-manager'
-            tsm.setup {
-                ensure_installed = {
-                    'bash',
-                    'c',
-                    'diff',
-                    'json',
-                    'json5',
-                    'html',
-                    'css',
-                    'ecma',
-                    'javascript',
-                    'typescript',
-                    'jsx',
-                    'tsx',
-                    'lua',
-                    'luadoc',
-                    'markdown',
-                    'markdown_inline',
-                    'query',
-                    'vim',
-                    'vimdoc',
-                    'make',
-                    'nginx',
-                    'sql',
-                    'zsh',
-                },
-                auto_install = true,
-                -- border = nil, -- (rounded | single), if nil, use style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
-                -- indent = true,
-                highlight = true,
-            }
-
-            --  tree-sitter-manager highlights by parser-name filetypes (like tsx), but Neovim sets React buffers to typescriptreact / javascriptreact.
-            --  So the plugin’s internal FileType autocmd doesn't fire for these two fts.
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = { 'javascriptreact', 'typescriptreact' },
-                callback = function(ev)
-                    vim.treesitter.start(ev.buf, 'tsx')
-                end,
-            })
+            require 'configs.tree_sitter_manager'
         end,
     },
 
+    -- linter
     -- {
     --     'mfussenegger/nvim-lint',
     --     event = { 'BufReadPre', 'BufNewFile' },
@@ -448,7 +360,7 @@ return {
     -- better loclist && qflist
     {
         'folke/trouble.nvim',
-        opts = {}, -- default
+        opts = {},
         cmd = 'Trouble',
     },
 
@@ -514,28 +426,18 @@ return {
             'DBUILastQueryInfo',
             'DBUIHideNotifications',
         },
-        init = function()
-            -- Your dadbod-ui configuration goes here
-            vim.g.db_ui_use_nerd_fonts = 1
-
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = { 'dbui' },
-                callback = function()
-                    if vim.bo.filetype == 'dbui' then
-                        vim.keymap.del('n', 'o', { buffer = true })
-                        vim.keymap.del('n', 'S', { buffer = true })
-                        vim.keymap.del('n', 'J', { buffer = true })
-                        vim.keymap.del('n', 'K', { buffer = true })
-                        vim.keymap.del('n', '<C-j>', { buffer = true })
-                        vim.keymap.del('n', '<C-k>', { buffer = true })
-                        vim.keymap.del('n', '<C-n>', { buffer = true })
-                        vim.keymap.del('n', '<C-p>', { buffer = true })
-
-                        vim.keymap.set('n', 's', '<Plug>(DBUI_SelectLine)', { buffer = true, silent = true })
-                        vim.keymap.set('n', 'v', '<Plug>(DBUI_SelectLineVsplit)', { buffer = true, silent = true })
-                    end
-                end,
-            })
+        config = function()
+            require 'configs.dbui'
+        end,
+    },
+    {
+        'toppair/peek.nvim',
+        event = { 'VeryLazy' },
+        build = 'deno task --quiet build:fast',
+        config = function()
+            require('peek').setup()
+            vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+            vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
         end,
     },
 }

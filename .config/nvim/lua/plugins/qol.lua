@@ -96,11 +96,11 @@ return {
         end,
     },
 
-    -- view images in neovim (term emu has to have support for image rendering)
+    -- view images in neovim (terminal emulator has to have support for image rendering)
     {
         '3rd/image.nvim',
         event = 'VeryLazy',
-        commit = '4206c48',
+        -- commit = '4206c48',
         config = function()
             require 'configs.image_nvim.image'
             -- require 'configs.image_nvim.luarocks' -- deps
