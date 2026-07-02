@@ -106,6 +106,7 @@ return {
         'tpope/vim-fugitive',
         cmd = { 'G', 'Git' },
     },
+
     -- make fugitive cmd's async (not using other feats outside of that)
     { 'tpope/vim-dispatch', lazy = true },
 

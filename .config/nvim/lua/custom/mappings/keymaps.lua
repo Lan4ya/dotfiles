@@ -53,12 +53,12 @@ map('v', '>', '>gv', { remap = true })
 map({ 'n', 't' }, '<M-i>', function()
     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
 end, { desc = 'toggle floating term' })
-map({ 'n', 't' }, '<M-m>', function()
-    require('custom.terminal').toggle { pos = 'sp', id = 'splitTerm' }
-end, { desc = 'toggle floating term' })
-map({ 'n', 't' }, '<M-v>', function()
-    require('custom.terminal').toggle { pos = 'vsp', id = 'verticalSplitTerm' }
-end, { desc = 'toggle floating term' })
+-- map({ 'n', 't' }, '<M-m>', function()
+--     require('custom.terminal').toggle { pos = 'sp', id = 'splitTerm' }
+-- end, { desc = 'toggle floating term' })
+-- map({ 'n', 't' }, '<M-v>', function()
+--     require('custom.terminal').toggle { pos = 'vsp', id = 'verticalSplitTerm' }
+-- end, { desc = 'toggle floating term' })
 map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
 -- Buffers
