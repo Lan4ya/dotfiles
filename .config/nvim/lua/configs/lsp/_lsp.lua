@@ -54,7 +54,7 @@ local servers = {
     -- html = require 'configs.lsp.html',
     jsonls = require 'configs.lsp.json',
     graphql = require 'configs.lsp.graphql',
-    sqlls = require 'configs.lsp.sql',
+    -- sqlls = require 'configs.lsp.sql',
     -- pyright = require 'configs.lsp.python',
 }
 
