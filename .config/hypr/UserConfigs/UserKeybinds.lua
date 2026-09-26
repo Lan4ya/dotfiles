@@ -282,6 +282,6 @@ hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("blueman-manager"))
 
 hl.bind(mainMod .. " + SHIFT + BACKSPACE", hl.dsp.exec_cmd(UserScripts .. "/ToggleZeroBrightness.sh"))
 
-hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(UserScripts .. "/OpenGithub.sh"))
+hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(UserScripts .. "/OpenHyprRepo.sh"))
 
 return {}

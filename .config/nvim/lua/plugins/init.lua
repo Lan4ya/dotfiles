@@ -34,6 +34,15 @@ return {
     },
 
     -- {
+    --     'folke/tokyonight.nvim',
+    --     lazy = false,
+    --     priority = 1000,
+    --     opts = {},
+    --     config = function()
+    --         vim.cmd.colorscheme 'tokyonight'
+    --     end,
+    -- },
+    -- {
     --     -- 'andreypopp/vim-colors-plain',
     --     'pbrisbin/vim-colors-off',
     --     lazy = false,

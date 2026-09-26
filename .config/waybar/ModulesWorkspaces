@@ -68,6 +68,7 @@
 // Kanji / Japanese style
 "hyprland/workspaces#kanji": {
 	"disable-scroll": true,
+	"on-click": "activate",
 	"show-special": false,
 	"all-outputs": false, // False makes each monitor shows only its own workspaces. Good when using split-monitor-workspaces
 	"format": "{icon}",
@@ -84,7 +85,7 @@
 		"7": "七",
 		"8": "八",
 		"9": "九",
-		"10": "十",
+    "10": "十",
 		"11": "一",
 		"12": "二",
 		"13": "三",
@@ -95,8 +96,7 @@
 		"18": "八",
 		"19": "九",
 		"20": "十",
-	},
-	"on-click": "hyprctl dispatch hl.dsp.focus '{id}'",
+	}
 },
 
 // for Camilla or Spanish

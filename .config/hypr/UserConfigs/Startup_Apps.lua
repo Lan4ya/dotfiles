@@ -14,9 +14,9 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 24")
 
-	-- hl.exec_cmd("foot", { workspace = "11 silent" })
+	hl.exec_cmd("foot", { workspace = "11 silent" })
 	-- hl.exec_cmd("kitty -e bash -c session-0", { workspace = "11 silent" })
-	hl.exec_cmd("foot -e bash -c session-0", { workspace = "11 silent" })
+	-- hl.exec_cmd("foot -e bash -c session-0", { workspace = "11 silent" })
 	hl.exec_cmd("firefox", { workspace = "19 silent" })
 
 	hl.exec_cmd("env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --uri=%U")

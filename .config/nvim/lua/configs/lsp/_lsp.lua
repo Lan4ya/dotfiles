@@ -43,7 +43,7 @@ require('mason').setup()
 
 local servers = {
     lua_ls = require 'configs.lsp.lua',
-    -- tsgo = require 'configs.lsp.tsgo',
+    -- tsc = require 'configs.lsp.tsc',
     vtsls = require 'configs.lsp.vtsls',
     -- ts_ls = 'configs.lsp.ts',
     denols = require 'configs.lsp.deno',
@@ -67,8 +67,8 @@ require('mason-tool-installer').setup {
         'typescript-language-server',
         'emmet-language-server',
         'vtsls',
-        'denols',
-        'tsgo',
+        'deno',
+        -- 'tsgo',
         'css-lsp',
         'html-lsp',
 
@@ -81,7 +81,6 @@ require('mason-tool-installer').setup {
         'jsonlint',
 
         -- linters
-        'eslint',
         'eslint_d',
         'markuplint',
         'stylelint',

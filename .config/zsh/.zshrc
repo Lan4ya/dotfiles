@@ -65,7 +65,7 @@ zinit light zsh-users/zsh-completions
 
 zinit light zsh-users/zsh-autosuggestions
 
-# Run this once in a blue moon 
+# Run this once in a blue moon to update zinit and all plugins
 # zinit update
 
 # Load completions once then cache it for 24hrs 
@@ -98,8 +98,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # tmux sessionizers 
 # bindkey -s '\el' "tms\n" 
 bindkey -s '\en' "session-0\n" 
-bindkey -s '\ef' "tms switch\n" 
-bindkey -s '\ej' 'tmux-sessionizer\n' 
+bindkey -s '\ed' "tms switch\n" 
+bindkey -s '\ef' 'tmux-sessionizer\n' 
 
 # --------------------------------------------------------------------------
 
@@ -327,6 +327,10 @@ export PATH="$PATH":"$HOME/.local/scripts/"
 export PATH=$PATH:/usr/local/mysql/bin
 export PATH=$PATH:/usr/local/share/mysql/bin
 export PATH="$HOME/dev/projects/flutter/bin:$PATH"
+export PATH="/home/maya/.local/bin:$PATH"
+export PATH=/home/maya/.opencode/bin:$PATH
+export PATH="$PATH:$HOME/.pub-cache/bin"
+
 export MANPATH="/usr/local/man:$MANPATH"
 
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -347,12 +351,3 @@ eval "$(zoxide init --cmd z zsh)"
 
 # ------------------------------------------------------------
 # zprof | head -n 30  # Display the profiling report
-export PATH="$PATH:$HOME/.pub-cache/bin"
-
-
-
-# Added by Antigravity CLI installer
-export PATH="/home/maya/.local/bin:$PATH"
-
-# opencode
-export PATH=/home/maya/.opencode/bin:$PATH

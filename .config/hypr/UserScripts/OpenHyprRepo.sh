@@ -1,6 +1,7 @@
 #!/bin/bash
 
-URL="https://github.com/Lan4ya?tab=repositories"
+URL="https://github.com/LinuxBeginnings/Hyprland-Dots/commits/main/"
+
 
 # Open GH in an existing Firefox window or launch a new instance
 if pgrep -x "firefox" > /dev/null; then
