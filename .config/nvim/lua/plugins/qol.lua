@@ -1,5 +1,5 @@
 return {
-    -- goated
+    -- goated :P
     { 'shortcuts/no-neck-pain.nvim', version = '*', cmd = 'NoNeckPain' },
 
     {
