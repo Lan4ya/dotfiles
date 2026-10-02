@@ -1,4 +1,6 @@
-map [normal] j scroll left
-map [normal] k scroll down
-map [normal] l scroll up
-map [normal] p scroll right
+map j scroll left
+map k scroll down
+map l scroll up
+map p scroll right
+map K scroll full-down
+map L scroll full-up
