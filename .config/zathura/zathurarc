@@ -1,0 +1,4 @@
+map [normal] j scroll left
+map [normal] k scroll down
+map [normal] l scroll up
+map [normal] p scroll right
