@@ -638,7 +638,8 @@ hl.window_rule({
 hl.window_rule({
 	name = "opacity_browser",
 	match = { tag = "browser" },
-	opacity = "1.0 1.0",
+	-- opacity = "1.0 1.0",
+	opacity = "0.95 0.95",
 })
 
 hl.window_rule({

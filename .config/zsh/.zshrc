@@ -97,7 +97,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # tmux sessionizers 
 # bindkey -s '\el' "tms\n" 
-bindkey -s '\en' "session-0\n" 
+bindkey -s '\e0' "session-0\n" 
 bindkey -s '\ed' "tms switch\n" 
 bindkey -s '\ef' 'tmux-sessionizer\n' 
 
@@ -271,7 +271,7 @@ alias off='systemctl poweroff'
 
 alias lv='ls -1 --color'
 alias ls='ls --color'
-alias sl='ls --color' 
+alias sl='ls --color' # iykyk
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
@@ -316,8 +316,10 @@ if ! ps -p $SSH_AGENT_PID &> /dev/null; then
   source ~/.ssh/agent_out &> /dev/null # check if SSH agent is running, start it if not
 fi
 
-# View man pages inside vim
+# View man pages inside nvim
 export MANPAGER="vim -M +MANPAGER -"
+
+export LESSKEY="$HOME/.config/lesskey/.lesskey"
 
 export PATH="$HOME/.local/share/pnpm:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"

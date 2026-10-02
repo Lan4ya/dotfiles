@@ -1,16 +1,17 @@
 local map = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
--- Disable
+-- Disable in command mode since they're gonna be used for completions (<C-p and <C-n> are used instead for prev/next history)
 map('c', '<Up>', '<Nop>', opts)
 map('c', '<Down>', '<Nop>', opts)
 
--- Change behavior
 -- map({ 'n' }, 'x', '"_x', opts)
 -- map({ 'n' }, 'X', '"_X', opts)
 -- map({ 'n' }, 's', '"_s', opts)
 
 -- Core Bindings Remap
+
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 map('n', 'Q', '@@')
 

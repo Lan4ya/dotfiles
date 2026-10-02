@@ -6,7 +6,6 @@ local opts = { silent = true, noremap = true }
 
 map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
--- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
 map('n', '<leader>s', '<cmd>w<cr>')
 map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute word in cursor' })
@@ -14,8 +13,6 @@ map('n', '<leader>q', '<cmd>qa<CR>')
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
 -- map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'dictionary' })
-
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 map({ 'n', 'x', 'o' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 map({ 'n', 'x', 'o' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
@@ -381,7 +378,7 @@ map('n', '[d', function()
     diag.jump { count = -1, float = true }
 end, { desc = 'Go to [P]rev diagnostic' })
 
-map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
+map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line Float' })
 map('n', '<M-t>', function()
     vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
 end, { desc = '[T]oggle [D]iagnostics Text' })

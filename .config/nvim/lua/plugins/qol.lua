@@ -42,7 +42,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         event = 'User FilePost',
-        -- event = 'VeryLazy',
         dependencies = {
             'williamboman/mason.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -77,8 +76,7 @@ return {
     {
         'kevinhwang91/nvim-ufo',
         dependencies = 'kevinhwang91/promise-async',
-        event = 'VeryLazy',
-        -- event = 'BufReadPost',
+        event = 'BufReadPost',
         opts = function()
             return require 'configs.nvim_ufo'
         end,
@@ -88,7 +86,7 @@ return {
     {
         'mg979/vim-visual-multi',
         branch = 'master',
-        event = 'VeryLazy',
+        event = 'BufReadPost',
         -- init instead of config for remaps to work
         -- See https://github.com/mg979/vim-visual-multi/issues/241
         init = function()
@@ -178,14 +176,14 @@ return {
         version = false,
         event = { 'BufReadPost', 'BufNewFile' },
         opts = function()
-            -- local indentscope = require 'mini.indentscope'
+            local indentscope = require 'mini.indentscope'
             return {
                 symbol = '│',
                 options = { try_as_border = true },
-                -- draw = {
-                --     delay = 0,
-                --     animation = indentscope.gen_animation.none(),
-                -- },
+                draw = {
+                    delay = 0,
+                    animation = indentscope.gen_animation.none(),
+                },
             }
         end,
         init = function()
@@ -200,10 +198,6 @@ return {
                     'mason',
                     'notify',
                     'toggleterm',
-                    'snacks_dashboard',
-                    'snacks_notif',
-                    'snacks_terminal',
-                    'snacks_win',
                 },
                 callback = function()
                     vim.b.miniindentscope_disable = true

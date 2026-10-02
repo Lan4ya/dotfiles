@@ -1,0 +1,82 @@
+set number              " Show line numbers
+set relativenumber      " Show relative line numbers for easy motion jumps
+set scrolloff=8         " Keep 8 lines visible above/below cursor when scrolling
+
+set expandtab           " Convert tabs to spaces
+set tabstop=2           " 1 tab = 2 spaces
+set shiftwidth=2        " Indent by 2 spaces with >> and <<
+set smartindent         " Auto-indent new lines based on syntax
+
+set ignorecase          " Case-insensitive search...
+set smartcase           " ...unless search term contains uppercase letters
+set hlsearch            " Highlight search matches
+set incsearch           " Jump to match as you type
+
+set termguicolors       " Enable 24-bit RGB colors
+set background=dark
+colorscheme industry
+
+set mouse=a             " Enable mouse scrolling/clicking
+set clipboard=unnamedplus " Use system clipboard (+ register) for yank/paste
+set undofile            " Save undo history across session restarts
+set splitright          " Vertical splits open to the right
+set splitbelow          " Horizontal splits open below
+
+let mapleader = " "     " Set spacebar as leader key
+
+" Clear search highlights with Esc
+nnoremap <Esc> <cmd>nohlsearch<CR>
+
+" Quick macro play
+nnoremap Q @@
+
+" Command-line / Motion swap (; <-> :)
+nnoremap ; :
+xnoremap ; :
+nnoremap : ,
+xnoremap : ,
+nnoremap , ;
+xnoremap , ;
+
+" Directional remaps (j -> h, p -> l)
+noremap j h
+noremap p l
+
+" Vertical remaps with wrapped-line support
+onoremap k j
+onoremap l k
+nnoremap <expr> <silent> k v:count == 0 ? 'gj' : 'j'
+xnoremap <expr> <silent> k v:count == 0 ? 'gj' : 'j'
+nnoremap <expr> <silent> l v:count == 0 ? 'gk' : 'k'
+xnoremap <expr> <silent> l v:count == 0 ? 'gk' : 'k'
+
+" Paste remaps
+noremap h p
+noremap H P
+
+" Window / Cursor height navigation (J -> H, L -> M, P -> L)
+noremap J H
+noremap L M
+noremap P L
+
+" LSP Hover (Fallback for Neovim / Vim9+ LSP)
+if has('nvim')
+  nnoremap K <cmd>lua vim.lsp.buf.hover({ border = 'rounded' })<CR>
+else
+  nnoremap K K
+endif
+
+" Search result navigation (b/B -> n/N centered)
+noremap b nzzzv
+noremap B Nzzzv
+noremap n b
+noremap N B
+
+" Action remaps (Yank, Open line, Mark, Join)
+noremap o y
+noremap O y$
+noremap m o
+noremap M O
+noremap y m
+noremap Y J
+

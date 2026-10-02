@@ -280,7 +280,7 @@ hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("pypr zoom"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("blueman-manager"))
 -- bind = $mainMod, Space, exec, $spotify
 
-hl.bind(mainMod .. " + SHIFT + BACKSPACE", hl.dsp.exec_cmd(UserScripts .. "/ToggleZeroBrightness.sh"))
+hl.bind(mainMod .. " + BACKSPACE", hl.dsp.exec_cmd(UserScripts .. "/ToggleZeroBrightness.sh"))
 
 hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(UserScripts .. "/OpenHyprRepo.sh"))
 
