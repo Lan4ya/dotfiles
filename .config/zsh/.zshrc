@@ -319,8 +319,6 @@ fi
 # View man pages inside nvim
 export MANPAGER="vim -M +MANPAGER -"
 
-export LESSKEY="$HOME/.config/lesskey/.lesskey"
-
 export PATH="$HOME/.local/share/pnpm:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
