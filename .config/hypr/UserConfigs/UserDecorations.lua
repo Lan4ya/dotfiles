@@ -14,8 +14,6 @@ hl.config({
 		border_size = 2,
 		-- gaps_in = 0
 		-- gaps_out = 0
-		-- col.active_border = $color12
-		-- col.inactive_border = $color10
 		col = {
 			active_border = wallust.color12,
 			inactive_border = wallust.background,
@@ -24,7 +22,6 @@ hl.config({
 
 	decoration = {
 		rounding = 8,
-		-- rounding = 0
 		active_opacity = 1.0,
 		inactive_opacity = 1.0,
 		fullscreen_opacity = 1.0,

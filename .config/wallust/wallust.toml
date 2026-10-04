@@ -35,12 +35,12 @@ threshold = 11
 [templates]
 cava.template = 'colors-cava'
 cava.target = '~/.config/cava/config'
-#
-# hypr.template = 'colors-hyprland.conf'
-# hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
-#
-# rofi.template = 'colors-rofi.rasi'
-# rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
+
+hypr.template = 'colors-hyprland.conf'
+hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
+
+rofi.template = 'colors-rofi.rasi'
+rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
 
 waybar.template = 'colors-waybar.css'
 waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
@@ -54,8 +54,8 @@ quickshell.target = '~/.config/quickshell/qml_color.json'
 # ghostty.template = 'colors-ghostty.conf'
 # ghostty.target = '~/.config/ghostty/wallust.conf'
 
-#swaync.template = 'colors-swaync.css'
-#swaync.target = '~/.config/swaync/wallust/colors-wallust.css'
+swaync.template = 'colors-swaync.css'
+swaync.target = '~/.config/swaync/wallust/colors-wallust.css'
 
 #macchina.template = 'colors-macchina.toml'
 #macchina.target = '~/.config/macchina/themes/wallust.toml'
@@ -63,5 +63,5 @@ quickshell.target = '~/.config/quickshell/qml_color.json'
 #wezterm.template = 'colors-wezterm.toml'
 #wezterm.target = '~/.config/wezterm/colors/wallust.toml'
 
-#zathura.template = 'colors-zathura'
-#zathura.target = '~/.config/zathura/zathurarc'
+# zathura.template = 'colors-zathura'
+# zathura.target = '~/.config/zathura/zathurarc'

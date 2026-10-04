@@ -319,17 +319,17 @@ fi
 # View man pages inside nvim
 export MANPAGER="vim -M +MANPAGER -"
 
+export GOPATH="$HOME/.local/share/go"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/scripts:$PATH"
 export PATH="$HOME/.local/share/pnpm:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH":"$HOME/.local/scripts/"
-export PATH=$PATH:/usr/local/mysql/bin
-export PATH=$PATH:/usr/local/share/mysql/bin
+export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/dev/projects/flutter/bin:$PATH"
-export PATH="/home/maya/.local/bin:$PATH"
-export PATH=/home/maya/.opencode/bin:$PATH
-export PATH="$PATH:$HOME/.pub-cache/bin"
+export PATH="$HOME/.pub-cache/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+export PATH="/usr/local/mysql/bin:/usr/local/share/mysql/bin:$PATH"
 
 export MANPATH="/usr/local/man:$MANPATH"
 
