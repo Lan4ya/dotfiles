@@ -248,7 +248,7 @@ bindkey -M viins '^K' kill-line # del line after cursor
 
 # reduce timeout for escape sequences
 KEYTIMEOUT=1
-# setopt auto_cd
+setopt auto_cd
 
 # History
 HISTSIZE=15000

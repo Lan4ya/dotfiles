@@ -97,4 +97,3 @@ while read -r monitor; do
   [ -n "$monitor" ] || continue
   apply_wallpaper_for_monitor "$monitor"
 done < <(get_monitors)
-

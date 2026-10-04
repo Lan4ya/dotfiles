@@ -3,9 +3,9 @@
 -- These configs are mostly for laptops. This is addemdum to Keybinds.conf
 
 local mainMod = "SUPER"
-local home = os.getenv("HOME")
+local configHome = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
 
-local scriptsDir = home .. "/.config/hypr/scripts"
+local scriptsDir = configHome .. "/hypr/scripts"
 -- local UserConfigs = home .. "/.config/hypr/UserConfigs"
 
 -- for disabling Touchpad. hyprctl devices to get device name.

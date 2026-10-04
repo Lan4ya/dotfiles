@@ -2,46 +2,28 @@
 local hl = hl
 
 local mainMod = "SUPER"
-local home = os.getenv("HOME")
-local scriptsDir = home .. "/.config/hypr/scripts"
-local UserScripts = home .. "/.config/hypr/UserScripts"
--- local UserConfigs = home .. "/.config/hypr/UserConfigs"
--- local hypr = home .. "/.config/hypr"
 
 -- Exit Hyprland
 hl.bind("CTRL + SHIFT + ALT + Delete", hl.dsp.exec_cmd("hyprctl dispatch exit 0"))
 
--- Close window
+-- Kill
 hl.bind(mainMod .. " + q", hl.dsp.window.close())
---kill
 
 -- Kill active process
-hl.bind(mainMod .. " + SHIFT + q", hl.dsp.exec_cmd(scriptsDir .. "/KillActiveProcess.sh"))
--- Kill active process
+hl.bind(mainMod .. " + SHIFT + q", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/KillActiveProcess.sh"))
 
 -- Screen lock
-hl.bind("CTRL + SHIFT + ALT + L", hl.dsp.exec_cmd(scriptsDir .. "/LockScreen.sh"))
--- screen lock
+hl.bind("CTRL + SHIFT + ALT + L", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/LockScreen.sh"))
 
 -- Power menu
-hl.bind("CTRL + SHIFT + ALT + P", hl.dsp.exec_cmd(scriptsDir .. "/Wlogout.sh"))
--- power menu
+hl.bind("CTRL + SHIFT + ALT + P", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/Wlogout.sh"))
 
 -- SwayNC notification panel
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
--- swayNC notification panel
-
--- Master Layout (commented out)
--- bind = $mainMod CTRL, D, layoutmsg, removemaster
--- bind = $mainMod, I, layoutmsg, addmaster
--- bind = $mainMod, J, layoutmsg, cyclenext
--- bind = $mainMod, K, layoutmsg, cycleprev
--- bind = $mainMod CTRL, M, layoutmsg, swapwithmaster
 
 -- Dwindle Layout
 -- bind = $mainMod SHIFT, V, togglesplit # only works on dwindle layout
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.window.pseudo())
--- dwindle
 
 -- Works on either layout (Master or Dwindle)
 -- bind = $mainMod, Y, exec, hyprctl dispatch splitratio 0.3
@@ -78,26 +60,22 @@ hl.bind(mainMod .. " + ALT + l", hl.dsp.window.swap({ direction = "up" }))
 hl.bind(mainMod .. " + ALT + p", hl.dsp.window.swap({ direction = "right" }))
 
 -- Resize windows
-hl.bind(mainMod .. " + SHIFT + j", hl.dsp.exec_cmd("hyprctl dispatch resizeactive -50 0"))
-hl.bind(mainMod .. " + SHIFT + k", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 -50"))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 50"))
-hl.bind(mainMod .. " + SHIFT + p", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 50 0"))
+hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = -50, y = 0, relative = true }))
+hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -50, relative = true }))
+hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.resize({ x = 0, y = 50, relative = true }))
+hl.bind(mainMod .. " + SHIFT + p", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
 
 -- Move windows (alternative)
-hl.bind(mainMod .. " + CTRL + j", hl.dsp.exec_cmd("hyprctl dispatch movewindow l"))
-hl.bind(mainMod .. " + CTRL + k", hl.dsp.exec_cmd("hyprctl dispatch movewindow r"))
-hl.bind(mainMod .. " + CTRL + l", hl.dsp.exec_cmd("hyprctl dispatch movewindow u"))
-hl.bind(mainMod .. " + CTRL + p", hl.dsp.exec_cmd("hyprctl dispatch movewindow d"))
-
--- Workspaces – skim active workspaces
-hl.bind(mainMod .. " + tab", hl.dsp.exec_cmd(UserScripts .. "/ActiveWorkspaces.sh next"))
-hl.bind(mainMod .. " + SHIFT + tab", hl.dsp.exec_cmd(UserScripts .. "/ActiveWorkspaces.sh prev"))
+hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.move({ direction = "l" }))
+hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.move({ direction = "r" }))
+hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.move({ direction = "u" }))
+hl.bind(mainMod .. " + CTRL + p", hl.dsp.window.move({ direction = "d" }))
 
 -- Move/resize windows with mouse drag
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 -- mouse:272 = left click
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 -- mouse:273 = right click
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Special workspace
 hl.bind(mainMod .. " + SHIFT + U", hl.dsp.window.move({ workspace = "special" }))
@@ -192,82 +170,57 @@ end
 --]]
 
 -- DEFAULT VARS
--- local files = "thunar"
 local code = "code --use-gl=desktop"
--- $spotify = env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --uri=%U # spotify no ads
 
 -- COMMON SHORTCUTS
---bindr = $mainMod, $mainMod_L, exec, pkill rofi || rofi -show drun -modi drun,filebrowser,run,window # Super Key to Launch rofi menu
 hl.bind(mainMod .. " + n", hl.dsp.exec_cmd("pkill rofi || true && rofi -show drun -modi drun,filebrowser,run,window"))
--- Main Menu (APP Launcher)
 
--- bind = $mainMod, ???, exec, xdg-open "http:// &"  # default browser
--- bindd = $mainMod, A, desktop overview, exec, $scriptsDir/OverviewToggle.sh
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc -c overview call overview toggle"))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/OverviewToggle.sh"))
+-- hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc -c overview call overview toggle"))
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("foot"))
 hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("kitty"))
-hl.bind(mainMod .. " + c", hl.dsp.exec_cmd(code))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(code))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar /home/maya/Downloads/"))
 
 -- WAYBAR
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
 -- Toggle hide/show waybar
-hl.bind(mainMod .. " + CTRL + B", hl.dsp.exec_cmd(scriptsDir .. "/WaybarStyles.sh"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
+
 -- Waybar Styles Menu
-hl.bind(mainMod .. " + ALT + B", hl.dsp.exec_cmd(scriptsDir .. "/WaybarLayout.sh"))
+hl.bind(mainMod .. " + CTRL + B", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/WaybarStyles.sh"))
+
 -- Waybar Layout Menu
+hl.bind(mainMod .. " + ALT + B", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/WaybarLayout.sh"))
 
--- FEATURES / EXTRAS
-hl.bind(mainMod .. " + CTRL + SHIFT + H", hl.dsp.exec_cmd(scriptsDir .. "/KeyHints.sh"))
--- help / cheat sheet
-
-hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd(scriptsDir .. "/Refresh.sh"))
 -- Refresh waybar, swaync, rofi
+hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/Refresh.sh"))
 
-hl.bind(mainMod .. " + CTRL + E", hl.dsp.exec_cmd(scriptsDir .. "/RofiEmoji.sh"))
--- emoji menu
+-- Emoji menu
+hl.bind(mainMod .. " + CTRL + E", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/RofiEmoji.sh"))
 
-hl.bind(mainMod .. " + semicolon", hl.dsp.exec_cmd(scriptsDir .. "/RofiSearch.sh"))
--- Google search using rofi
-
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(scriptsDir .. "/ChangeBlur.sh"))
 -- Toggle blur settings
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ChangeBlur.sh"))
 
-hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd(scriptsDir .. "/ChangeLayout.sh"))
 -- Toggle Master or Dwindle Layout
+hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ChangeLayout.sh"))
 
-hl.bind(mainMod .. " + ALT + V", hl.dsp.exec_cmd(scriptsDir .. "/ClipManager.sh"))
 -- Clipboard Manager
-
-hl.bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd(scriptsDir .. "/RofiThemeSelector.sh"))
--- KooL Rofi Menu Theme Selector
-
-hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(scriptsDir .. "/Quick_Settings.sh"))
+hl.bind(mainMod .. " + ALT + V", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ClipManager.sh"))
 
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.float())
-hl.bind(mainMod .. " + CTRL + F", hl.dsp.window.fullscreen())
 -- fake full screen
+hl.bind(mainMod .. " + CTRL + F", hl.dsp.window.fullscreen())
 
--- UserScripts
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd(UserScripts .. "/RofiBeats.sh"))
 -- Online music using rofi
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("$HOME/.config/hypr/UserScripts/RofiBeats.sh"))
 
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(UserScripts .. "/WallpaperSelect.sh"))
 -- Select wallpaper to apply
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("$HOME/.config/hypr/UserScripts/WallpaperSelect.sh"))
 
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(UserScripts .. "/WallpaperEffects.sh"))
 -- Wallpaper Effects by imagemagick
-
-hl.bind(mainMod .. " + CTRL + O", hl.dsp.exec_cmd("hyprctl setprop active opaque toggle"))
--- disable opacity on active window
-
-hl.bind(mainMod .. " + CTRL + Return", hl.dsp.exec_cmd(scriptsDir .. "/KeyBinds.sh"))
--- search keybinds via rofi
-
-hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("pypr zoom"))
--- Toggle Desktop Zoom
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("$HOME/.config/hypr/UserScripts/WallpaperEffects.sh"))
 
 -- For passthrough keyboard into a VM
 -- bind = $mainMod ALT, P, submap, passthru
@@ -276,12 +229,7 @@ hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("pypr zoom"))
 --bind = $mainMod ALT, P, submap, reset
 --submap = reset
 
--- Manually added
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("blueman-manager"))
--- bind = $mainMod, Space, exec, $spotify
-
-hl.bind(mainMod .. " + BACKSPACE", hl.dsp.exec_cmd(UserScripts .. "/ToggleZeroBrightness.sh"))
-
-hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(UserScripts .. "/OpenHyprRepo.sh"))
+hl.bind(mainMod .. " + BACKSPACE", hl.dsp.exec_cmd("$HOME/.config/hypr/UserScripts/ToggleZeroBrightness.sh"))
 
 return {}
