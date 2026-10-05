@@ -1,4 +1,4 @@
-# Copy of copy-mode-vi default bindings
+# Reference for copy-mode-vi bindings
 
 bind-key -T copy-mode-vi Enter             send-keys -X copy-pipe-and-cancel
 bind-key -T copy-mode-vi Escape            send-keys -X clear-selection

@@ -103,10 +103,10 @@ bindkey -s '\ef' 'tmux-sessionizer\n'
 
 # --------------------------------------------------------------------------
 
-# Emacs Mode
+# Emacs Mode 
 # bindkey -e  
 
-# Some useful emacs bindings for nav/editing: 
+# Useful emacs bindings for nav/editing: 
 
 # M-b → move backward word
 # M-f → move forward word
@@ -130,7 +130,7 @@ bindkey -v
 autoload -U select-word-style
 select-word-style bash  
 
-# Some qol functions for better vimming
+# Custom functions for better vimming
 move-to-middle-of-line() {
   local line=$BUFFER
   local len=${#line}
@@ -187,22 +187,24 @@ zle -N yank_to_clipboard
 zle -N yank_eol_to_clipboard
 
 # Normal Mode:
-bindkey -M vicmd n vi-backward-word        
-bindkey -M vicmd N vi-backward-blank-word  
-
-bindkey -M vicmd b vi-repeat-search        
-bindkey -M vicmd B vi-rev-repeat-search    
+# bindkey -M vicmd b vi-backward-word        
+# bindkey -M vicmd B vi-backward-blank-word  
+#
+# bindkey -M vicmd p vi-repeat-search        
+# bindkey -M vicmd P vi-rev-repeat-search    
 
 bindkey -M vicmd 'j' backward-char
-bindkey -M vicmd 'J' beginning-of-line
-
 bindkey -M vicmd 'k' down-line-or-history
-
 bindkey -M vicmd 'l' up-line-or-history
-bindkey -M vicmd 'L' move-to-middle-of-line 
-
 bindkey -M vicmd 'p' forward-char
+
+bindkey -M vicmd 'J' beginning-of-line
+bindkey -M vicmd 'L' move-to-middle-of-line 
 bindkey -M vicmd 'P' end-of-line
+
+bindkey -M vicmd ',' vi-repeat-find
+bindkey -M vicmd ';' execute-named-cmd
+bindkey -M vicmd ':' vi-rev-repeat-find
 
 # bindkey -M vicmd 'h' vi-put-after    
 # bindkey -M vicmd 'H' vi-put-before

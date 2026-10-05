@@ -1,0 +1,67 @@
+# keyd configuration - system level keyboard layout remaps 
+# https://github.com/rvaiya/keyd
+
+[ids]
+*
+
+[main]
+
+p = ;
+; = p
+
+# define layer key
+rightalt = layer(rightaltLayerKey)
+
+# function keys remap
+capslock = escape
+escape= capslock 
+tab = leftcontrol
+
+# 102nd is altgr/rightalt 
+# 102nd = leftcontrol  
+
+# symbols keys remap
+[shift]
+3 = *
+4 = &
+5 = #  
+7 = %
+8 = $
+
+# keys that are active when layer key is pressed/held
+[rightaltLayerKey]
+
+space = backspace 
+
+# q =  
+# w =
+e = =   
+r = >
+t = ` 
+# y = 
+# u = 
+# i = _
+# o = $
+# p =  
+
+# a = 
+# s = 
+d = tab 
+f = enter
+g = ~ 
+j = left
+k = down
+l = up
+; = right 
+' = capslock
+
+# z = 
+# x = 
+# c = 
+# v = 
+# n =    
+# b = 
+# n =  
+# , = 
+# . = 
+# / = 

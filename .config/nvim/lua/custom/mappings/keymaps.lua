@@ -96,7 +96,7 @@ end, { desc = 'Delete all normal buffers', silent = true })
 
 -- Windows
 
--- unmap default window navigations
+-- Unmap default window navigations
 map({ 'n', 'x' }, '<C-w>h', '<Nop>')
 map({ 'n', 'x' }, '<C-w><C-h>', '<Nop>')
 map({ 'n', 'x' }, '<C-w>j', '<Nop>')
@@ -106,7 +106,7 @@ map({ 'n', 'x' }, '<C-w><C-k>', '<Nop>')
 map({ 'n', 'x' }, '<C-w>l', '<Nop>')
 map({ 'n', 'x' }, '<C-w><C-l>', '<Nop>')
 
--- map new window navigations
+-- Map new window navigations
 map({ 'n', 'x' }, '<C-j>', '<C-w>h')
 map({ 'n', 'x' }, '<C-k>', '<C-w>j')
 map({ 'n', 'x' }, '<C-l>', '<C-w>k')

@@ -15,6 +15,9 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 map('n', 'Q', '@@')
 
+map({ 'n', 'x', 'o' }, 'n', 'nzzzv', opts)
+map({ 'n', 'x', 'o' }, 'N', 'Nzzzv', opts)
+
 map({ 'n', 'x' }, ';', ':', { noremap = true })
 map({ 'n', 'x' }, ':', ',', opts)
 map({ 'n', 'x' }, ',', ';', opts)
@@ -36,11 +39,6 @@ map('n', 'K', function()
 end)
 map({ 'n', 'x' }, 'L', 'M', opts)
 map({ 'n', 'x', 'o' }, 'P', 'L', opts)
-
-map({ 'n', 'x', 'o' }, 'b', 'nzzzv', opts)
-map({ 'n', 'x', 'o' }, 'B', 'Nzzzv', opts)
-map({ 'n', 'x', 'o' }, 'n', 'b', opts)
-map({ 'n', 'x', 'o' }, 'N', 'B', opts)
 
 map({ 'n', 'x', 'o' }, 'o', 'y', opts)
 map({ 'n', 'x', 'o' }, 'O', 'y$', opts)
