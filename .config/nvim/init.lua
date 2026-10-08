@@ -32,7 +32,7 @@ require('lazy').setup {
             enabled = not vim.g.vscode,
         },
         {
-            import = 'vsc.plugins',
+            import = 'vscode-nvim.plugins',
             enabled = vim.g.vscode,
         },
     },
@@ -86,9 +86,9 @@ if not vim.g.vscode then
     end)
 else
     vim.schedule(function()
-        require 'vscode.keybindings'
-        require 'vscode.opts'
-        require 'vscode.autocmds'
+        require 'vscode-nvim.keybindings'
+        require 'vscode-nvim.opts'
+        require 'vscode-nvim.autocmds'
     end)
 end
 

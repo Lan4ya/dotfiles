@@ -1,8 +1,4 @@
--- INFO: Since 'space' is used as a binding in keybindings.json, leader bindings won't in this config
--- this is because every space key press, vscode will only listen for bindings that's native to it's own.
-
 local map = vim.keymap.set
-local unmap = vim.keymap.unset
 local opts = { silent = true, noremap = true }
 
 local vscode = require 'vscode'
@@ -24,7 +20,7 @@ local function code_action(kind)
     end
 end
 
--- These are here and not in keybindings.json since built-in nvim 'g' bindings breaks.
+-- INFO: The below 'g' bindings are here and not in ~/config/Code/User/keybindings.json since neovims own 'g' will be overriden and break.
 map('n', 'glf', code_action 'source.fixAll')
 map('n', 'gmi', code_action 'source.addMissingImports')
 map('n', 'gru', code_action 'source.organizeImports')
