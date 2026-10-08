@@ -51,29 +51,25 @@ hl.bind(mainMod .. " + CTRL + right", hl.dsp.exec_cmd("hyprctl dispatch movewind
 hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "up" }))
--- hl.bind(mainMod .. " + p", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + semicolon", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + p", hl.dsp.focus({ direction = "right" }))
 
 -- Swap windows
 hl.bind(mainMod .. " + ALT + j", hl.dsp.window.swap({ direction = "left" }))
 hl.bind(mainMod .. " + ALT + k", hl.dsp.window.swap({ direction = "down" }))
 hl.bind(mainMod .. " + ALT + l", hl.dsp.window.swap({ direction = "up" }))
--- hl.bind(mainMod .. " + ALT + p", hl.dsp.window.swap({ direction = "right" }))
-hl.bind(mainMod .. " + ALT + semicolon", hl.dsp.window.swap({ direction = "right" }))
+hl.bind(mainMod .. " + ALT + p", hl.dsp.window.swap({ direction = "right" }))
 
 -- Resize windows
 hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = -50, y = 0, relative = true }))
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -50, relative = true }))
 hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.resize({ x = 0, y = 50, relative = true }))
--- hl.bind(mainMod .. " + SHIFT + p", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
-hl.bind(mainMod .. " + SHIFT + semicolon", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
+hl.bind(mainMod .. " + SHIFT + p", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
 
 -- Move windows (alternative)
 hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.move({ direction = "l" }))
 hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.move({ direction = "r" }))
 hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.move({ direction = "u" }))
--- hl.bind(mainMod .. " + CTRL + p", hl.dsp.window.move({ direction = "d" }))
-hl.bind(mainMod .. " + CTRL + semicolon", hl.dsp.window.move({ direction = "d" }))
+hl.bind(mainMod .. " + CTRL + p", hl.dsp.window.move({ direction = "d" }))
 
 -- Move/resize windows with mouse drag
 -- mouse:272 = left click
@@ -179,11 +175,11 @@ local code = "code --use-gl=desktop"
 -- COMMON SHORTCUTS
 hl.bind(mainMod .. " + n", hl.dsp.exec_cmd("pkill rofi || true && rofi -show drun -modi drun,filebrowser,run,window"))
 
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/OverviewToggle.sh"))
--- hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc -c overview call overview toggle"))
+-- hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/OverviewToggle.sh"))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc -c overview call overview toggle"))
 
-hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("foot"))
-hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("kitty"))
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty"))
+hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("foot"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(code))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar /home/maya/Downloads/"))
 

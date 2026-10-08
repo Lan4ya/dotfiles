@@ -3,10 +3,10 @@ local hl = hl
 
 local home = os.getenv("HOME")
 
-local scriptsDir = home .. "/.config/hypr/scripts"
-local UserScripts = home .. "/.config/hypr/UserScripts"
-local wallDIR = home .. "/Pictures/wallpapers"
-local lock = home .. "/.config/hypr/scripts/LockScreen.sh"
+-- local scriptsDir = home .. "/.config/hypr/scripts"
+-- local UserScripts = home .. "/.config/hypr/UserScripts"
+-- local wallDIR = home .. "/Pictures/wallpapers"
+-- local lock = home .. "/.config/hypr/scripts/LockScreen.sh"
 
 hl.on("hyprland.start", function()
 	-- hl.exec_cmd("hyprpm reload -n")
@@ -37,8 +37,6 @@ hl.on("hyprland.start", function()
 	-- hl.exec_cmd("thunar /home/maya/Downloads/")
 	-- hl.exec_cmd("hyprctl dispatch exec '[workspace 2 silent] google-chrome-stable --disable-background-networking --ozone-platform=wayland --ozone-platform-hint=auto --use-gl=egl --use-vulkan=any --ignore-gpu-blocklist --enable-zero-copy --enable-gpu-rasterization --canvas-oop-rasterization --enable-features=CanvasOopRasterization,Vulkan'")
 	-- hl.exec_cmd("ags")
-	-- hl.exec_cmd("rog-control-center")
-	-- hl.exec_cmd(scriptsDir .. "/Hyprsunset.sh init")
 	-- -- xdg-desktop-portal-hyprland (should be auto starting. However, you can force to start)
 	-- hl.exec_cmd(scriptsDir .. "/PortalHyprland.sh")
 end)

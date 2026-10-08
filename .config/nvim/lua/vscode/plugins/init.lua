@@ -24,5 +24,4 @@ return {
 
         -- :h nvim-surround.usage
     },
-
 }

@@ -86,9 +86,9 @@ if not vim.g.vscode then
     end)
 else
     vim.schedule(function()
-        require 'vsc.keybindings'
-        require 'vsc.opts'
-        require 'vsc.autocmds'
+        require 'vscode.keybindings'
+        require 'vscode.opts'
+        require 'vscode.autocmds'
     end)
 end
 

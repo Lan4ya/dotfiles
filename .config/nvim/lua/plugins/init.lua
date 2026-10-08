@@ -169,7 +169,7 @@ return {
         end,
     },
 
-    -- file tree
+    -- File tree
     {
         'stevearc/oil.nvim',
         opts = {},
@@ -184,7 +184,7 @@ return {
         end,
     },
 
-    -- blazingly fast???
+    -- Blazingly fast???
     {
         'ThePrimeagen/harpoon',
         branch = 'harpoon2',
@@ -196,7 +196,7 @@ return {
 
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
-    -- no more annoyinng default notif
+    -- No more annoyinng default notif
     {
         'rcarriga/nvim-notify',
         event = 'VeryLazy',
@@ -216,7 +216,7 @@ return {
         end,
     },
 
-    -- file picker
+    -- File picker
     {
         'nvim-telescope/telescope.nvim',
         cmd = 'Telescope',
@@ -252,7 +252,7 @@ return {
         end,
     },
 
-    -- snippet engine
+    -- Snippet engine
     {
         'L3MON4D3/LuaSnip',
         dependencies = { 'rafamadriz/friendly-snippets' }, -- snippet collections from vscode
@@ -274,7 +274,7 @@ return {
         end,
     },
 
-    -- configures LuaLS for editing neovim
+    -- Configures LuaLS for editing neovim
     {
         'folke/lazydev.nvim',
         ft = 'lua',
@@ -285,7 +285,7 @@ return {
         },
     },
 
-    -- keymap management
+    -- Keymap management
     {
         'folke/which-key.nvim',
         event = 'VeryLazy',
@@ -294,7 +294,7 @@ return {
         end,
     },
 
-    -- better comments
+    -- Better comments
     {
         'folke/todo-comments.nvim',
         event = 'VeryLazy',
@@ -317,6 +317,7 @@ return {
         },
     },
 
+    -- UI for managing treesitter
     {
         'romus204/tree-sitter-manager.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
@@ -326,27 +327,41 @@ return {
         end,
     },
 
-    -- linter
-    -- {
-    --     'mfussenegger/nvim-lint',
-    --     event = { 'BufReadPre', 'BufNewFile' },
-    --     config = function()
-    --         local lint = require 'lint'
-    --         lint.linters_by_ft = {
-    --             javascript = { 'eslint_d' },
-    --             typescript = { 'eslint_d' },
-    --             javascriptreact = { 'eslint_d' },
-    --             typescriptreact = { 'eslint_d' },
-    --         }
-    --
-    --         -- autocmd to trigger linting
-    --         vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
-    --             callback = function()
-    --                 lint.try_lint()
-    --             end,
-    --         })
-    --     end,
-    -- },
+    -- Linter
+    {
+        'mfussenegger/nvim-lint',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = function()
+            local lint = require 'lint'
+            -- NOTE: Skip configuring vscode-eslint and clang-tidy here.
+            -- ESLint is already handled in configs/lsp, and clangd manages its own linting (clang-tidy).
+
+            --         lint.linters_by_ft = {
+            --             javascript = { 'eslint_d' },
+            --             typescript = { 'eslint_d' },
+            --             javascriptreact = { 'eslint_d' },
+            --             typescriptreact = { 'eslint_d' },
+            --         }
+            --
+
+            -- Autocmd to trigger linting
+            vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
+                callback = function()
+                    lint.try_lint()
+                end,
+            })
+        end,
+    },
+
+    -- Auto-install linters you've referenced in nvim-lint
+    {
+        'rshkarin/mason-nvim-lint',
+        config = function()
+            require('mason-nvim-lint').setup {
+                automatic_installation = true,
+            }
+        end,
+    },
 
     -- formatter
     {

@@ -49,6 +49,7 @@ local servers = {
     denols = require 'configs.lsp.deno',
     emmet_language_server = require 'configs.lsp.emmet',
     eslint = require 'configs.lsp.eslint',
+    clangd = require 'configs.lsp.clangd',
     tailwindcss = require 'configs.lsp.tailwindcss',
     -- cssls = require 'configs.lsp.css',
     -- html = require 'configs.lsp.html',
@@ -68,7 +69,6 @@ require('mason-tool-installer').setup {
         'emmet-language-server',
         'vtsls',
         'deno',
-        -- 'tsgo',
         'css-lsp',
         'html-lsp',
 
@@ -81,7 +81,7 @@ require('mason-tool-installer').setup {
         'jsonlint',
 
         -- linters
-        'eslint_d',
+        'eslint-lsp', -- vscode-eslint-language-server
         'markuplint',
         'stylelint',
         'jsonlint',
