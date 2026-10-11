@@ -2,33 +2,34 @@ local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 local opts = { silent = true, noremap = true }
 
--- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
+-- Generates a tag file (an index of every functions, symbols, vars, etc) in the current project.
+-- Useful for navigating a codebase without relying on LSP's goto definition or find-references.
+-- Requires ctags to be installed.
+-- :help tags
+-- :help ctags
+map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'Make tags' })
 
-map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
-map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
+map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'Toggle spell check' }) -- Pair with 'z=' to check spelling suggestions under cursor.
 
-map('n', '<leader>s', '<cmd>w<cr>')
-map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute word in cursor' })
-map('n', '<leader>q', '<cmd>qa<CR>')
+map('x', '<leader>bp', [["_dP]], { desc = 'Blackhole paste' })
+map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'Blackhole delete' })
+map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word in buf' })
 
--- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
--- map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'dictionary' })
+map('n', '<leader>s', '<cmd>w<cr>', { desc = 'Save file' })
+map('n', '<leader>q', '<cmd>qa<CR>', { desc = 'Quit all' })
 
-map({ 'n', 'x', 'o' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
-map({ 'n', 'x', 'o' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
+map('n', '<leader><leader>r', '<cmd>restart<CR>', { desc = 'Restart Neovim' })
 
-map('n', '<leader><leader>r', '<cmd>restart<CR>')
-
-map('i', '<M-i>', '<ESC>^i', { remap = true, desc = 'move beginning of line' })
-map('i', '<M-o>', '<End>', { remap = true, desc = 'move end of line' })
-map('i', '<M-d>', '<C-o>dw', { remap = true, desc = 'del word after cursor' })
+map('i', '<M-i>', '<ESC>^i', { remap = true, desc = 'Move beginning of line' })
+map('i', '<M-o>', '<End>', { remap = true, desc = 'Move end of line' })
+map('i', '<M-d>', '<C-o>dw', { remap = true, desc = 'Del word after cursor' })
 
 map({ 'n', 'x' }, '<M-k>', '<C-d>zz', opts)
 map({ 'n', 'x' }, '<M-l>', '<C-u>zz', opts)
 
-map('n', '=ap', "ma=ap'a")
+map('n', '=ap', "ma=ap'a", { desc = 'Indent paragraph, keep cursor position' })
 
-map('n', '<C-c>', '<cmd>%y+<CR>', { desc = 'copy whole file' })
+map('n', '<C-c>', '<cmd>%y+<CR>', { desc = 'Copy whole file' })
 
 -- Comments
 map('n', '<leader>/', 'gcc', { desc = 'Toggle Comment', remap = true })
@@ -47,18 +48,9 @@ map('v', '<', '<gv', { remap = true })
 map('v', '>', '>gv', { remap = true })
 
 -- Buffers
--- local function map_buffer_cmd(lhs, rhs, desc)
---     vim.keymap.set('n', lhs, function()
---         if vim.bo.filetype ~= 'NvimTree' then
---             vim.cmd(rhs)
---         end
---     end, { desc = desc, noremap = true, silent = true })
--- end
--- map_buffer_cmd('<Tab>', 'bnext', 'Next Buffer')
--- map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
-map('n', '<Tab>', ':bnext<CR>', opts)
-map('n', '<S-Tab>', ':bprevious<CR>', opts)
-map('n', '<leader>,', '<C-^>', { desc = 'Switch to last buffer' })
+map('n', '<Tab>', ':bnext<CR>', { desc = 'Next Buffer' })
+map('n', '<S-Tab>', ':bprevious<CR>', { desc = 'Prev Buffer' })
+map('n', '<leader>,', '<C-^>', { desc = 'Switch to Last Buffer' })
 map('n', '<leader>X', function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         local bt = vim.bo[buf].buftype
@@ -66,21 +58,7 @@ map('n', '<leader>X', function()
             pcall(vim.api.nvim_buf_delete, buf, { force = true })
         end
     end
-end, { desc = 'Delete all normal buffers', silent = true })
-
--- map('n', '<leader>x', function()
---     local current_buf = vim.api.nvim_get_current_buf()
---     local listed_buffers = vim.tbl_filter(function(buf)
---         return vim.fn.buflisted(buf) == 1
---     end, vim.api.nvim_list_bufs())
---
---     local last_buf = listed_buffers[#listed_buffers]
---     local next_cmd = current_buf == last_buf and 'bprevious' or 'bnext'
---     vim.cmd(next_cmd)
---     require('mini.bufremove').delete(current_buf, false)
---     -- Built in alt of mini.bufremove:
---     -- vim.cmd('bd ' .. current_buf)
--- end, { desc = 'Close current buffer' })
+end, { desc = 'Delete All Buffers', silent = true })
 
 -- Windows
 
@@ -99,15 +77,6 @@ map({ 'n', 'x' }, '<C-j>', '<C-w>h')
 map({ 'n', 'x' }, '<C-k>', '<C-w>j')
 map({ 'n', 'x' }, '<C-l>', '<C-w>k')
 map({ 'n', 'x' }, '<C-p>', '<C-w>l')
-
--- map({ 'n', 'x' }, '<C-w>j', '<C-w>h')
--- map({ 'n', 'x' }, '<C-w><C-j>', '<C-w>h')
--- map({ 'n', 'x' }, '<C-w>k', '<C-w>j')
--- map({ 'n', 'x' }, '<C-w><C-k>', '<C-w>j')
--- map({ 'n', 'x' }, '<C-w>l', '<C-w>k')
--- map({ 'n', 'x' }, '<C-w><C-l>', '<C-w>k')
--- map({ 'n', 'x' }, '<C-w>p', '<C-w>l')
--- map({ 'n', 'x' }, '<C-w><C-p>', '<C-w>l')
 
 map({ 'n', 'x' }, '<leader>wo', '<C-w>o')
 map({ 'n', 'x' }, '<leader>wv', '<C-w>v')

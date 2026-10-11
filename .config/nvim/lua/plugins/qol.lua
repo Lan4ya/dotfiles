@@ -100,8 +100,7 @@ return {
         '3rd/image.nvim',
         event = 'VeryLazy',
         config = function()
-            require 'configs.image_nvim.image'
-            -- require 'configs.image_nvim.luarocks' -- deps
+            require 'configs.image'
         end,
     },
 

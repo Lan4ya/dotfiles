@@ -5,6 +5,9 @@ local opts = { silent = true, noremap = true }
 map('c', '<Up>', '<Nop>', opts)
 map('c', '<Down>', '<Nop>', opts)
 
+map({ 'n', 'x', 'o' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
+map({ 'n', 'x', 'o' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
+
 -- map({ 'n' }, 'x', '"_x', opts)
 -- map({ 'n' }, 'X', '"_X', opts)
 -- map({ 'n' }, 's', '"_s', opts)

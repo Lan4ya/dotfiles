@@ -1,23 +1,10 @@
 local o = vim.opt
 
--- o.foldmethod = 'expr'
--- o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
--- vim.o.autocomplete = true
-
--- vim.api.nvim_create_autocmd('LspAttach', {
---     callback = function(args)
---         local client = vim.lsp.get_client_by_id(args.data.client_id)
---         if client and client:supports_method 'textDocument/completion' then
---             vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
---         end
---     end,
--- })
--- key delays (too low will break bindings)
-o.timeoutlen = 550 -- 1000 default
-o.ttimeoutlen = 10 -- 50 default
+o.timeoutlen = 550 -- Key delays for mappings (will break bindings if val is too low). 1000 is the default val
+o.ttimeoutlen = 0 -- Key delays for term key codes. 50 is the default val
 
 o.termguicolors = true
 o.swapfile = false
@@ -33,17 +20,8 @@ o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,term
 o.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 o.completeopt = 'menu,menuone,noinsert'
 o.winblend = 0
--- o.guicursor = 'n-v-c-i-r-ci:block-blinkon3-blinkoff3-blinkwait1'
 o.guicursor =
     'n-v-c-t:block-blinkon3-blinkoff3-blinkwait1,i:ver20-blinkon3-blinkoff3-blinkwait1,r:block-blinkon3-blinkoff3-blinkwait1,ci:block-blinkon3-blinkoff3-blinkwait1'
--- o.guicursor = {
---     'n-v-c:block-blinkon3-blinkoff3-blinkwait1',
---     'i-ci-r-cr-t:block-blinkon3-blinkoff3-blinkwait1-Cursor/lCursor',
--- }
-
--- o.smoothscroll = true
--- o.mousescroll = 'ver:25,hor:6'
-
 o.foldenable = true
 o.foldcolumn = '0' -- fold col width, 0 to hide
 o.foldlevel = 99 -- Prevent auto-closing of folds
@@ -92,5 +70,5 @@ o.wildmode = 'longest:full,full' -- command-line completion mode
 o.winminwidth = 5
 o.wrap = true
 
--- fix markdown indentation settings
+-- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0

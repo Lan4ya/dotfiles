@@ -1,3 +1,5 @@
+set selection-clipboard clipboard
+
 map j scroll left
 map k scroll down
 map l scroll up

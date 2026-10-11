@@ -86,28 +86,17 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# --------------------------------------------------------------------------
-
-# Remove binding
-# bindkey -r '^L'
-
-# --------------------------------------------------------------------------
-
-# Keybindings
-
-# tmux sessionizers 
+# Tmux sessionizers 
 # bindkey -s '\el' "tms\n" 
 bindkey -s '\e0' "session-0\n" 
 bindkey -s '\ed' "tms switch\n" 
 bindkey -s '\ef' 'tmux-sessionizer\n' 
 
-# --------------------------------------------------------------------------
 
 # Emacs Mode 
 # bindkey -e  
 
 # Useful emacs bindings for nav/editing: 
-
 # M-b → move backward word
 # M-f → move forward word
 # M-d → del word after cursor
@@ -248,8 +237,9 @@ bindkey -M viins '^K' kill-line # del line after cursor
 
 # --------------------------------------------------------------------------
 
-# reduce timeout for escape sequences
+# Reduce timeout for escape sequences
 KEYTIMEOUT=1
+
 setopt auto_cd
 
 # History
@@ -305,20 +295,20 @@ if [ -f "$HOME/.github_pat" ]; then
     source "$HOME/.github_pat"
 fi
 
-# --------------------------------------------------------------------------
+# Start/reuse a persistent SSH agent
+AGENT_SOCK="$HOME/.ssh/agent.sock"
 
-# Start SSH agent if not running
-# if [ -z "$SSH_AUTH_SOCK" ]; then
-#    eval "$(ssh-agent -s)" > /dev/null
-#    ssh-add ~/.ssh/id_github_sign_and_auth 2>/dev/null
-# fi
- 
-if ! ps -p $SSH_AGENT_PID &> /dev/null; then
-  ssh-agent > ~/.ssh/agent_out
-  source ~/.ssh/agent_out &> /dev/null # check if SSH agent is running, start it if not
+if [ ! -S "$AGENT_SOCK" ]; then
+    eval "$(ssh-agent -s -a "$AGENT_SOCK")" >/dev/null
 fi
 
-# View man pages inside nvim
+export SSH_AUTH_SOCK="$AGENT_SOCK"
+
+if ! ssh-add -l >/dev/null 2>&1; then
+  ssh-add 2>/dev/null
+fi
+
+# View man pages inside vim
 export MANPAGER="vim -M +MANPAGER -"
 
 export GOPATH="$HOME/.local/share/go"
@@ -332,7 +322,6 @@ export PATH="$HOME/dev/projects/flutter/bin:$PATH"
 export PATH="$HOME/.pub-cache/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="/usr/local/mysql/bin:/usr/local/share/mysql/bin:$PATH"
-
 export MANPATH="/usr/local/man:$MANPATH"
 
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -343,13 +332,10 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# export PGUSER=maya
-# export PGDATABASE=maya
-
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd z zsh)"
-# eval "$(starship init zsh)"
+# eval "$(starship init zsh)" 
 
 # ------------------------------------------------------------
 # zprof | head -n 30  # Display the profiling report

@@ -56,7 +56,7 @@ map('n', '<leader>p', function()
     vim.cmd 'doautocmd User HarpoonUpdated'
 end, { desc = 'Harpoon: Jump to file 4' })
 
-map('n', '<leader>m', function()
-    harpoon:list():select(5)
-    vim.cmd 'doautocmd User HarpoonUpdated'
-end, { desc = 'Harpoon: Jump to file 5' })
+-- map('n', '<leader>m', function()
+--     harpoon:list():select(5)
+--     vim.cmd 'doautocmd User HarpoonUpdated'
+-- end, { desc = 'Harpoon: Jump to file 5' })
