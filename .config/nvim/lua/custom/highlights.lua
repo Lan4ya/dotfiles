@@ -33,6 +33,8 @@ set_hl(0, 'ModeMsg', { fg = '#d19a66' })
 
 -- plugin highlight groups
 -- set_hl(0, 'MiniIndentscopeSymbol', { fg = '#2E3440' })
+vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'NONE', ctermbg = 'NONE' })
+vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'NONE', ctermbg = 'NONE' })
 
-if vim.g.colors_name == 'nord' then
-end
+-- if vim.g.colors_name == 'nord' then
+-- end

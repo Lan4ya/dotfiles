@@ -68,8 +68,8 @@ local opts = {
     },
     view = {
         side = 'left',
-        width = 50,
-        -- width = 45,
+        -- width = 50,
+        width = 45,
         preserve_window_proportions = true,
     },
     actions = {

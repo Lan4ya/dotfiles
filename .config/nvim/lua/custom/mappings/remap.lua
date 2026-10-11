@@ -9,8 +9,6 @@ map('c', '<Down>', '<Nop>', opts)
 -- map({ 'n' }, 'X', '"_X', opts)
 -- map({ 'n' }, 's', '"_s', opts)
 
--- Core Bindings Remap
-
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 map('n', 'Q', '@@')

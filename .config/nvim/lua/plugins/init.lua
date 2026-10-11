@@ -1,7 +1,9 @@
 return {
     { 'nvim-lua/plenary.nvim', event = 'VeryLazy' },
 
-    -- colorscheme
+    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+
+    -- Colorscheme
     {
         'gbprod/nord.nvim',
         lazy = false,
@@ -33,15 +35,7 @@ return {
         end,
     },
 
-    -- {
-    --     'folke/tokyonight.nvim',
-    --     lazy = false,
-    --     priority = 1000,
-    --     opts = {},
-    --     config = function()
-    --         vim.cmd.colorscheme 'tokyonight'
-    --     end,
-    -- },
+    -- Colorscheme if I'm feeling psycho
     -- {
     --     -- 'andreypopp/vim-colors-plain',
     --     'pbrisbin/vim-colors-off',
@@ -56,23 +50,32 @@ return {
     --     end,
     -- },
 
-    -- {
-    --     'stevearc/resession.nvim',
-    --     -- event = 'VimEnter',
-    --     lazy = false,
-    --     dependencies = {
-    --         {
-    --             'tiagovla/scope.nvim',
-    --             lazy = false,
-    --             config = true,
-    --         },
-    --     },
-    --     config = function()
-    --         require 'configs.resession'
-    --     end,
-    -- },
+    -- Statusline
+    {
+        'nvim-lualine/lualine.nvim',
+        event = 'VeryLazy',
+        config = function()
+            local custom_theme = require 'lualine.themes.nord'
+            custom_theme.normal.c.bg = 'NONE'
+            custom_theme.inactive.c.bg = 'NONE'
 
-    -- session manaager
+            require('lualine').setup {
+                options = {
+                    theme = custom_theme,
+                },
+                sections = {
+                    lualine_c = {
+                        {
+                            'filename',
+                            -- path = 1,
+                        },
+                    },
+                },
+            }
+        end,
+    },
+
+    -- Session manager
     {
         'rmagatti/auto-session',
         event = 'VimEnter',
@@ -81,22 +84,13 @@ return {
         end,
     },
 
-    -- {
-    --     'akinsho/bufferline.nvim',
-    --     event = 'BufReadPost',
-    --     version = '*',
-    --     config = function()
-    --         require 'configs.bufferline'
-    --     end,
-    -- },
-
-    -- detects a projects indentation style and sets 'shiftwidth', 'tabstop', and 'expandtab' accordingly
+    -- Detects a projects indentation style and sets 'shiftwidth', 'tabstop', and 'expandtab' accordingly
     {
         'tpope/vim-sleuth',
         event = { 'BufReadPre', 'BufNewFile' },
     },
 
-    -- auto pair paren, quotes, etc.
+    -- Auto pair paren, quotes, etc.
     {
         'windwp/nvim-autopairs',
         event = { 'InsertEnter' },
@@ -110,13 +104,13 @@ return {
         -- end,
     },
 
-    -- git integrations
+    -- Git integrations (Yes, the 4 plugins below)
     {
         'tpope/vim-fugitive',
         cmd = { 'G', 'Git' },
     },
 
-    -- make fugitive cmd's async (not using other feats outside of that)
+    -- Make fugitive cmd's async (not using other feats outside of that)
     { 'tpope/vim-dispatch', lazy = true },
 
     {
@@ -130,36 +124,10 @@ return {
             'DiffviewRefresh',
             'DiffviewToggleFiles',
         },
-        keys = {
-            {
-                '<leader>gdo',
-                function()
-                    local view = require('diffview.lib').get_current_view()
-                    if view then
-                        vim.cmd 'DiffviewClose'
-                    else
-                        vim.cmd 'DiffviewOpen'
-                    end
-                end,
-                desc = 'Git Diffview: Toggle',
-            },
-            -- { '<leader>gdo', '<cmd>DiffviewOpen<cr>', desc = 'Diffview: [O]pen' },
-            -- { '<leader>gdc', '<cmd>DiffviewClose<cr>', desc = 'Diffview: [C]lose' },
-            { '<leader>gdh', '<cmd>DiffviewFileHistory<cr>', desc = 'Git Diffview: File [H]istory' },
-            { '<leader>gdf', '<cmd>DiffviewFocusFiles<cr>', desc = 'Git Diffview: [F]ocus Files Sidebar' },
-            { '<leader>gdl', '<cmd>DiffviewLog<cr>', desc = 'Git Diffview: [L]og' },
-            { '<leader>gdr', '<cmd>DiffviewRefresh<cr>', desc = 'Git Diffview: [R]efresh views' },
-            { '<leader>gdt', '<cmd>DiffviewToggleFiles<cr>', desc = 'Git Diffview: [T]oggle Files Sidebar' },
-        },
         config = function()
             require 'configs.diffview'
         end,
     },
-
-    -- {
-    --     'esmuellert/vscode-diff.nvim',
-    --     dependencies = { 'MunifTanjim/nui.nvim' },
-    -- },
 
     {
         'lewis6991/gitsigns.nvim',
@@ -170,12 +138,6 @@ return {
     },
 
     -- File tree
-    {
-        'stevearc/oil.nvim',
-        opts = {},
-        cmd = 'Oil',
-    },
-
     {
         'nvim-tree/nvim-tree.lua',
         cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
@@ -193,8 +155,6 @@ return {
             require 'configs.harpoon'
         end,
     },
-
-    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
     -- No more annoyinng default notif
     {
@@ -228,24 +188,11 @@ return {
                     return vim.fn.executable 'make' == 1
                 end,
             },
-            {
-                'nvim-telescope/telescope-live-grep-args.nvim',
-            },
-
+            { 'nvim-telescope/telescope-live-grep-args.nvim' },
             { 'nvim-telescope/telescope-ui-select.nvim' },
-
-            {
-                'nvim-telescope/telescope-frecency.nvim',
-                version = '*',
-            },
-
-            {
-                'smartpde/telescope-recent-files',
-            },
-
-            {
-                'benfowler/telescope-luasnip.nvim',
-            },
+            { 'nvim-telescope/telescope-frecency.nvim', version = '*' },
+            { 'smartpde/telescope-recent-files' },
+            { 'benfowler/telescope-luasnip.nvim' },
         },
         config = function()
             require 'configs.telescope'
@@ -334,7 +281,7 @@ return {
         config = function()
             local lint = require 'lint'
             -- NOTE: Skip configuring vscode-eslint and clang-tidy here.
-            -- ESLint is already handled in configs/lsp, and clangd manages its own linting (clang-tidy).
+            -- ESLint is already handled in configs/lsp while clangd manages its own linting (clang-tidy).
 
             --         lint.linters_by_ft = {
             --             javascript = { 'eslint_d' },
@@ -363,7 +310,7 @@ return {
         end,
     },
 
-    -- formatter
+    -- Formatter
     {
         'stevearc/conform.nvim',
         event = 'BufWritePre',
@@ -372,7 +319,7 @@ return {
         end,
     },
 
-    -- surround, delete around, etc.
+    -- Surround, delete around, etc.
     {
         'kylechui/nvim-surround',
         version = '^3.0.0',
@@ -382,14 +329,14 @@ return {
         end,
     },
 
-    -- better loclist && qflist
+    -- Better loclist && qflist
     {
         'folke/trouble.nvim',
         opts = {},
         cmd = 'Trouble',
     },
 
-    -- provide bg color on color vals
+    -- Provide bg color on color values
     {
         'brenoprata10/nvim-highlight-colors',
         event = 'VeryLazy',
@@ -398,14 +345,14 @@ return {
         end,
     },
 
-    -- better bufdelete
+    -- Better bufdelete
     -- {
     --     'echasnovski/mini.bufremove',
     --     event = 'VeryLazy',
     --     version = '*',
     -- },
 
-    -- tests
+    -- Tests
     -- {
     --     'nvim-neotest/neotest',
     --     event = 'VeryLazy',
@@ -455,6 +402,7 @@ return {
             require 'configs.dbui'
         end,
     },
+
     {
         'toppair/peek.nvim',
         event = { 'VeryLazy' },

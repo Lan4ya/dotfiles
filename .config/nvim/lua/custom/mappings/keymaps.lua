@@ -46,18 +46,6 @@ map('x', '<M-L>', ":move '<-2<CR>gv-gv", opts)
 map('v', '<', '<gv', { remap = true })
 map('v', '>', '>gv', { remap = true })
 
--- Terminal
-map({ 'n', 't' }, '<M-i>', function()
-    require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
-end, { desc = 'toggle floating term' })
--- map({ 'n', 't' }, '<M-m>', function()
---     require('custom.terminal').toggle { pos = 'sp', id = 'splitTerm' }
--- end, { desc = 'toggle floating term' })
--- map({ 'n', 't' }, '<M-v>', function()
---     require('custom.terminal').toggle { pos = 'vsp', id = 'verticalSplitTerm' }
--- end, { desc = 'toggle floating term' })
-map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
-
 -- Buffers
 -- local function map_buffer_cmd(lhs, rhs, desc)
 --     vim.keymap.set('n', lhs, function()
@@ -133,7 +121,24 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
+---
 --------------------------------------- Plugin Mappings ---------------------------------------
+
+-- Git Diffview
+map('n', '<leader>gdo', function()
+    local view = require('diffview.lib').get_current_view()
+    if view then
+        vim.cmd 'DiffviewClose'
+    else
+        vim.cmd 'DiffviewOpen'
+    end
+end, { desc = 'Git Diffview: Toggle' })
+map('n', '<leader>gdh', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git Diffview: File [H]istory' })
+map('n', '<leader>gdf', '<cmd>DiffviewFocusFiles<cr>', { desc = 'Git Diffview: [F]ocus Files Sidebar' })
+map('n', '<leader>gdl', '<cmd>DiffviewLog<cr>', { desc = 'Git Diffview: [L]og' })
+map('n', '<leader>gdr', '<cmd>DiffviewRefresh<cr>', { desc = 'Git Diffview: [R]efresh views' })
+map('n', '<leader>gdt', '<cmd>DiffviewToggleFiles<cr>', { desc = 'Git Diffview: [T]oggle Files Sidebar' })
+
 -- Vim Dadbod x UI
 map('n', '<leader>dbt', '<cmd>DBUIToggle<CR>')
 map('n', '<leader>dba', '<cmd>DBUIAddConnection<CR>')

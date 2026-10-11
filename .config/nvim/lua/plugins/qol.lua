@@ -11,6 +11,7 @@ return {
             require 'configs.blink'
         end,
     },
+
     -- {
     --     'hrsh7th/nvim-cmp',
     --     event = 'InsertEnter',
@@ -52,7 +53,7 @@ return {
         end,
     },
 
-    -- makes file ops lsp-aware. It notifies
+    -- Makes file ops lsp-aware. It notifies
     -- the lsp so imports and references update automatically.
     {
         'antosha417/nvim-lsp-file-operations',
@@ -72,7 +73,7 @@ return {
     --     },
     -- },
 
-    -- smarter folding
+    -- Smarter folding
     {
         'kevinhwang91/nvim-ufo',
         dependencies = 'kevinhwang91/promise-async',
@@ -82,7 +83,7 @@ return {
         end,
     },
 
-    -- multi cursor
+    -- Multi cursor
     {
         'mg979/vim-visual-multi',
         branch = 'master',
@@ -94,25 +95,24 @@ return {
         end,
     },
 
-    -- view images in neovim (terminal emulator has to have support for image rendering)
+    -- View images in neovim (termimal must support image rendering)
     {
         '3rd/image.nvim',
         event = 'VeryLazy',
-        -- commit = '4206c48',
         config = function()
             require 'configs.image_nvim.image'
             -- require 'configs.image_nvim.luarocks' -- deps
         end,
     },
 
-    -- enhances nvim's native comment strings
+    -- Enhances nvim's native comment strings
     {
         'folke/ts-comments.nvim',
         opts = {},
         event = 'VeryLazy',
     },
 
-    -- indentation guides
+    -- Indentation guides
     {
         'lukas-reineke/indent-blankline.nvim',
         main = 'ibl',
