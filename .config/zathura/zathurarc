@@ -1,3 +1,4 @@
+set scroll-step 100
 set selection-clipboard clipboard
 
 map j scroll left
@@ -6,3 +7,6 @@ map l scroll up
 map p scroll right
 map K scroll full-down
 map L scroll full-up
+
+map ; focus_inputbar ":"
+

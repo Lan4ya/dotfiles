@@ -53,27 +53,28 @@ return {
         end,
     },
 
-    -- Makes file ops lsp-aware. It notifies
-    -- the lsp so imports and references update automatically.
+    -- Lsp aware file ops
     {
         'antosha417/nvim-lsp-file-operations',
         event = 'VeryLazy',
         config = function()
             require('lsp-file-operations').setup()
+
+            local lspconfig = require 'lspconfig'
+
+            lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
+                capabilities = vim.tbl_deep_extend(
+                    'force',
+                    vim.lsp.protocol.make_client_capabilities(),
+                    -- returns configured operations if setup() was already called
+                    -- or default operations if not
+                    require('lsp-file-operations').default_capabilities()
+                ),
+            })
         end,
     },
 
-    -- {
-    --     'folke/snacks.nvim',
-    --     event = 'VeryLazy',
-    --     opts = {
-    --         rename = {
-    --             enabled = true,
-    --         },
-    --     },
-    -- },
-
-    -- Smarter folding
+    -- Better folding
     {
         'kevinhwang91/nvim-ufo',
         dependencies = 'kevinhwang91/promise-async',
@@ -95,7 +96,7 @@ return {
         end,
     },
 
-    -- View images in neovim (termimal must support image rendering)
+    -- View images (Termimal must support image rendering)
     {
         '3rd/image.nvim',
         event = 'VeryLazy',
@@ -104,7 +105,7 @@ return {
         end,
     },
 
-    -- Enhances nvim's native comment strings
+    -- Enhances comment strings
     {
         'folke/ts-comments.nvim',
         opts = {},
@@ -116,92 +117,18 @@ return {
         'lukas-reineke/indent-blankline.nvim',
         main = 'ibl',
         event = { 'BufReadPost', 'BufNewFile' },
-        opts = {
-            indent = {
-                highlight = {
-                    'RainbowRed',
-                    'RainbowYellow',
-                    'RainbowBlue',
-                    'RainbowOrange',
-                    'RainbowGreen',
-                    'RainbowViolet',
-                    'RainbowCyan',
-                },
-                char = '│',
-                tab_char = '│',
-            },
-            scope = {
-                enabled = false, -- don't use ibl scope since mini.indentscope handles it
-            },
-            exclude = {
-                filetypes = {
-                    'help',
-                    'alpha',
-                    'dashboard',
-                    'neo-tree',
-                    'Trouble',
-                    'lazy',
-                    'mason',
-                    'notify',
-                    'toggleterm',
-                    'snacks_dashboard',
-                    'snacks_notif',
-                    'snacks_terminal',
-                    'snacks_win',
-                },
-            },
-        },
-        config = function(_, opts)
-            local hooks = require 'ibl.hooks'
-            local set_hl = vim.api.nvim_set_hl
-
-            hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-                set_hl(0, 'RainbowRed', { fg = '#3a2e33' })
-                set_hl(0, 'RainbowYellow', { fg = '#3a3629' })
-                set_hl(0, 'RainbowGreen', { fg = '#2e3a2e' })
-                set_hl(0, 'RainbowCyan', { fg = '#2c3a3a' })
-                set_hl(0, 'RainbowBlue', { fg = '#2c323d' })
-                set_hl(0, 'RainbowViolet', { fg = '#342e3d' })
-                set_hl(0, 'RainbowOrange', { fg = '#3a3029' })
-            end)
-
-            require('ibl').setup(opts)
+        config = function()
+            require 'configs.ibl'
         end,
     },
 
-    -- active scope indentation guide
+    -- Active scope indentation guide
     {
         'echasnovski/mini.indentscope',
         version = false,
         event = { 'BufReadPost', 'BufNewFile' },
-        opts = function()
-            local indentscope = require 'mini.indentscope'
-            return {
-                symbol = '│',
-                options = { try_as_border = true },
-                draw = {
-                    delay = 0,
-                    animation = indentscope.gen_animation.none(),
-                },
-            }
-        end,
-        init = function()
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = {
-                    'help',
-                    'alpha',
-                    'dashboard',
-                    'neo-tree',
-                    'Trouble',
-                    'lazy',
-                    'mason',
-                    'notify',
-                    'toggleterm',
-                },
-                callback = function()
-                    vim.b.miniindentscope_disable = true
-                end,
-            })
+        config = function()
+            require 'configs.indentscope'
         end,
     },
 }

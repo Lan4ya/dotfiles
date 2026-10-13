@@ -110,8 +110,6 @@ bindkey -s '\ef' 'tmux-sessionizer\n'
 # "C-w: Delete word beofre cursor 
 # "C-u: Delete from cursor to BOL 
 
-# --------------------------------------------------------------------------
-
 # Vi Mode 
 bindkey -v   
 
@@ -257,9 +255,7 @@ setopt hist_find_no_dups
 
 # Aliases
 alias nz='nvim ~/.zshrc'
-alias sc='source ~/.config/zsh/.zshrc'
 alias c='clear'
-alias off='systemctl poweroff'
 
 alias lv='ls -1 --color'
 alias ls='ls --color'
@@ -268,9 +264,10 @@ alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
 
-alias yacleanf='yay -Sc --noconfirm' 
+alias yaycleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
-alias paccleanf='sudo pacman -Sc --noconfirm' 
+alias cleanf='sudo pacman -Sc --noconfirm' 
+
 alias t='thunar' 
 
 alias a='tmux a'
@@ -282,11 +279,6 @@ alias j='nvim'
 alias nv='NVIM_APPNAME=nvim-minimal nvim' 
 alias sn='sudo -E nvim' 
 alias code='code --use-gl=desktop'
-alias rptn='repomix && thunar && hyprctl dispatch workspace 8'
-
-alias ghc='gh copilot' 
-alias ghcs='gh copilot suggest' 
-alias ghce='gh copilot explain'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

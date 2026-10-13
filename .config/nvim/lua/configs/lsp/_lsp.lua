@@ -5,25 +5,14 @@ require('fidget').setup {}
 vim.lsp.document_color.enable(false)
 
 vim.diagnostic.config {
-    virtual_text = false,
-    -- virtual_text = { current_line = true },
+    -- virtual_text = false,
+    virtual_text = { current_line = true },
     float = { border = 'rounded', source = 'if_many' },
     severity_sort = true,
     underline = false,
     signs = true,
     update_in_insert = true,
 }
-
--- https://github.com/antosha417/nvim-lsp-file-operations
-lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
-    capabilities = vim.tbl_deep_extend(
-        'force',
-        vim.lsp.protocol.make_client_capabilities(),
-        -- returns configured operations if setup() was already called
-        -- or default operations if not
-        require('lsp-file-operations').default_capabilities()
-    ),
-})
 
 -- disable semantic tokens provider
 local function on_init(client, _)

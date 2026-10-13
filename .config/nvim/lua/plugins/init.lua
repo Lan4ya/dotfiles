@@ -4,38 +4,48 @@ return {
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
     -- Colorscheme
+    -- {
+    --     'gbprod/nord.nvim',
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         require('nord').setup {
+    --             transparent = false,
+    --         }
+    --         vim.cmd.colorscheme 'nord'
+    --         local set_hl = vim.api.nvim_set_hl
+    --         local muted_fg = '#C8D0E0'
+    --
+    --         set_hl(0, '@operator', { fg = '#1bfd9c' })
+    --
+    --         local highlights = {
+    --             '@number',
+    --             '@boolean',
+    --             '@string',
+    --             '@variable',
+    --             -- '@keyword.function',
+    --             -- '@function.call',
+    --             -- '@function.builtin',
+    --             '@tag',
+    --         }
+    --
+    --         for _, hl in ipairs(highlights) do
+    --             set_hl(0, hl, { fg = muted_fg })
+    --         end
+    --     end,
+    -- },
+
     {
-        'gbprod/nord.nvim',
+        'oxidescheme/nvim',
+        name = 'oxide',
         lazy = false,
         priority = 1000,
         config = function()
-            require('nord').setup {
-                transparent = false,
-            }
-            vim.cmd.colorscheme 'nord'
-            local set_hl = vim.api.nvim_set_hl
-            local muted_fg = '#C8D0E0'
-
-            set_hl(0, '@operator', { fg = '#1bfd9c' })
-
-            local highlights = {
-                '@number',
-                '@boolean',
-                '@string',
-                '@variable',
-                -- '@keyword.function',
-                -- '@function.call',
-                -- '@function.builtin',
-                '@tag',
-            }
-
-            for _, hl in ipairs(highlights) do
-                set_hl(0, hl, { fg = muted_fg })
-            end
+            require('oxide').setup()
+            vim.cmd.colorscheme 'oxide'
         end,
     },
 
-    -- Colorscheme if I'm feeling psycho
     -- {
     --     -- 'andreypopp/vim-colors-plain',
     --     'pbrisbin/vim-colors-off',
@@ -55,23 +65,7 @@ return {
         'nvim-lualine/lualine.nvim',
         event = 'VeryLazy',
         config = function()
-            local custom_theme = require 'lualine.themes.nord'
-            custom_theme.normal.c.bg = 'NONE'
-            custom_theme.inactive.c.bg = 'NONE'
-
-            require('lualine').setup {
-                options = {
-                    theme = custom_theme,
-                },
-                sections = {
-                    lualine_c = {
-                        {
-                            'filename',
-                            -- path = 1,
-                        },
-                    },
-                },
-            }
+            require 'configs.lualine'
         end,
     },
 
@@ -84,7 +78,7 @@ return {
         end,
     },
 
-    -- Detects a projects indentation style and sets 'shiftwidth', 'tabstop', and 'expandtab' accordingly
+    -- Automatic indentation styles
     {
         'tpope/vim-sleuth',
         event = { 'BufReadPre', 'BufNewFile' },
@@ -156,23 +150,12 @@ return {
         end,
     },
 
-    -- No more annoyinng default notif
+    -- Better notifications
     {
         'rcarriga/nvim-notify',
         event = 'VeryLazy',
-        opts = {
-            background_colour = '#000000',
-            timeout = 3000, -- ms
-            max_width = 65,
-            stages = 'static',
-            render = 'default',
-            top_down = false,
-        },
-        config = function(_, opts)
-            require('notify').setup(opts)
-
-            -- override vim.notify
-            vim.notify = require 'notify'
+        config = function()
+            require 'configs.notify'
         end,
     },
 
@@ -207,17 +190,7 @@ return {
         build = 'make install_jsregexp',
         event = 'VeryLazy',
         config = function()
-            require('luasnip').setup {
-                history = false, -- Keep snippet history open to allow jumping backward
-                -- keep_roots = true, -- Prevent $0 exit node from instantly destroying history
-                keep_roots = false,
-                region_check_events = 'InsertEnter,CursorMoved', -- Exit snippet tracking if cursor moves away
-                delete_check_events = 'TextChanged,InsertLeave', -- Kill phantom sessions on text change or leaving Insert
-            }
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_lua').load {
-                paths = { vim.fn.stdpath 'config' .. '/lua/snippets' },
-            }
+            require 'configs.luasnip'
         end,
     },
 
@@ -241,27 +214,13 @@ return {
         end,
     },
 
-    -- Better comments
+    -- Colored todo comments
     {
         'folke/todo-comments.nvim',
         event = 'VeryLazy',
-        opts = {
-            signs = false,
-            keywords = {
-                FIX = {
-                    icon = ' ',
-                    color = 'error',
-                    alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' },
-                    -- signs = false, -- configure signs for some keywords individually
-                },
-                TODO = { icon = ' ', color = 'info' },
-                HACK = { icon = ' ', color = 'warning' },
-                WARN = { icon = ' ', color = 'warning', alt = { 'WARNING', 'XXX' } },
-                PERF = { icon = ' ', alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
-                NOTE = { icon = ' ', color = 'hint', alt = { 'INFO' } },
-                TEST = { icon = '⏲ ', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            },
-        },
+        opts = function()
+            require 'configs.todo'
+        end,
     },
 
     -- UI for managing treesitter
@@ -279,28 +238,11 @@ return {
         'mfussenegger/nvim-lint',
         event = { 'BufReadPre', 'BufNewFile' },
         config = function()
-            local lint = require 'lint'
-            -- NOTE: Skip configuring vscode-eslint and clang-tidy here.
-            -- ESLint is already handled in configs/lsp while clangd manages its own linting (clang-tidy).
-
-            --         lint.linters_by_ft = {
-            --             javascript = { 'eslint_d' },
-            --             typescript = { 'eslint_d' },
-            --             javascriptreact = { 'eslint_d' },
-            --             typescriptreact = { 'eslint_d' },
-            --         }
-            --
-
-            -- Autocmd to trigger linting
-            vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
-                callback = function()
-                    lint.try_lint()
-                end,
-            })
+            require 'configs.lint'
         end,
     },
 
-    -- Auto-install linters you've referenced in nvim-lint
+    -- Auto-install linters referenced in nvim-lint
     {
         'rshkarin/mason-nvim-lint',
         config = function()
@@ -345,13 +287,6 @@ return {
         end,
     },
 
-    -- Better bufdelete
-    -- {
-    --     'echasnovski/mini.bufremove',
-    --     event = 'VeryLazy',
-    --     version = '*',
-    -- },
-
     -- Tests
     -- {
     --     'nvim-neotest/neotest',
@@ -372,6 +307,7 @@ return {
     --     end,
     -- },
 
+    -- Completion AI
     {
         'zbirenbaum/copilot.lua',
         event = 'InsertEnter',
@@ -383,26 +319,20 @@ return {
         end,
     },
 
+    -- DB client UI
     {
         'kristijanhusak/vim-dadbod-ui',
         dependencies = {
             { 'tpope/vim-dadbod', lazy = true },
             { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
         },
-        cmd = {
-            'DBUI',
-            'DBUIToggle',
-            'DBUIAddConnection',
-            'DBUIFindBuffer',
-            'DBUIRenameBuffer',
-            'DBUILastQueryInfo',
-            'DBUIHideNotifications',
-        },
+        cmd = { 'DBUI', 'DBUIToggle', 'DBUIAddConnection', 'DBUIFindBuffer', 'DBUIRenameBuffer', 'DBUILastQueryInfo', 'DBUIHideNotifications' },
         config = function()
             require 'configs.dbui'
         end,
     },
 
+    -- Markdown preview
     {
         'toppair/peek.nvim',
         event = { 'VeryLazy' },

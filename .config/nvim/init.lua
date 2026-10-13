@@ -1,8 +1,3 @@
--- module caching
-if vim.loader then
-    vim.loader.enable()
-end
-
 vim.filetype.add {
     filename = {
         ['tsconfig.json'] = 'jsonc',
@@ -90,13 +85,3 @@ else
         require 'vscode-nvim.autocmds'
     end)
 end
-
--- [[ Setting options ]]
--- See `:help vim.opt`
---  For more options, you can see `:help option-list`
-
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
