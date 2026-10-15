@@ -8,22 +8,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Perf 
-DISABLE_AUTO_UPDATE="true"
-DISABLE_MAGIC_FUNCTIONS="true"
-DISABLE_COMPFIX="true"
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
-ZSH_AUTOSUGGEST_USE_ASYNC=1
-export NVM_LAZY_LOAD=true NVM_AUTO_USE=false NVM_COMPLETION=false
-
-# Set the dir we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
 # Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[[ ! -d "$ZINIT_HOME" ]] && mkdir -p "$(dirname $ZINIT_HOME)" && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
 # Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
@@ -36,23 +23,11 @@ zinit light romkatv/powerlevel10k
 
 # Add zsh snippets 
 
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
-# zinit ice wait lucid 
-zinit snippet OMZP::git
+zinit ice wait lucid 
+zinit snippet OMZP::git # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
 
-# zinit ice wait lucid
-# zinit snippet OMZP::archlinux
-
-# zinit ice wait lucid
-# zinit snippet OMZP::command-not-found
-
-# zinit ice wait lucid 
-# zinit snippet OMZP::nvm
-
-# Add zsh plugins 
-
-# zinit ice wait lucid 
-# zinit light lukechilds/zsh-nvm
+zinit ice wait lucid
+zinit snippet OMZP::command-not-found
 
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
@@ -63,19 +38,25 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit ice wait lucid
 zinit light zsh-users/zsh-completions
 
+# zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
-# Run this once in a blue moon to update zinit and all plugins
-# zinit update
+# Run a quiet parallel update automatically once every 7 days
+local zinit_update_stamp="${ZINIT_HOME}/._last_auto_update"
+if [[ -n "$ZINIT_HOME" && -n "$zinit_update_stamp"(#qN.mh+168) ]]; then
+  (zinit self-update -q && zinit update --parallel -q && touch "$zinit_update_stamp") &!
+elif [[ ! -f "$zinit_update_stamp" ]]; then
+  touch "$zinit_update_stamp"
+fi
 
-# Load completions once then cache it for 24hrs 
-# https://gist.github.com/ctechols/ca1035271ad134841284
-autoload -Uz compinit 
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-	compinit;
+# Compinit cache 
+setopt extendedglob
+local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
+  autoload -Uz compinit && compinit -d "$zcompdump"
 else
-	compinit -C;
-fi;
+  autoload -Uz compinit && compinit -C -d "$zcompdump"
+fi
 
 zinit cdreplay -q
 
@@ -91,7 +72,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 bindkey -s '\e0' "session-0\n" 
 bindkey -s '\ed' "tms switch\n" 
 bindkey -s '\ef' 'tmux-sessionizer\n' 
-
 
 # Emacs Mode 
 # bindkey -e  
@@ -235,18 +215,18 @@ bindkey -M viins '^K' kill-line # del line after cursor
 
 # --------------------------------------------------------------------------
 
-# Reduce timeout for escape sequences
-KEYTIMEOUT=1
-
-setopt auto_cd
-
-# History
-HISTSIZE=15000
+export KEYTIMEOUT=1 # Reduce timeout for escape sequences
+HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+setopt NO_FLOW_CONTROL # Disabled legacy TTY flow monitoring 
+setopt HASH_CMDS # Application command caching
 setopt appendhistory
 setopt sharehistory
+setopt auto_cd
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
@@ -255,26 +235,20 @@ setopt hist_find_no_dups
 
 # Aliases
 alias nz='nvim ~/.zshrc'
+alias sc='source ~/.config/zsh/.zshrc'
 alias c='clear'
-
+alias off='poweroff'
 alias lv='ls -1 --color'
 alias ls='ls --color'
 alias sl='ls --color' # iykyk
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
-
 alias yaycleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
 alias cleanf='sudo pacman -Sc --noconfirm' 
-
 alias t='thunar' 
-
 alias a='tmux a'
-alias tn='tmux new'
-alias tls='tmux ls'
-alias tks='tmux kill-server'
-
 alias j='nvim' 
 alias nv='NVIM_APPNAME=nvim-minimal nvim' 
 alias sn='sudo -E nvim' 
@@ -291,7 +265,7 @@ fi
 AGENT_SOCK="$HOME/.ssh/agent.sock"
 
 if [ ! -S "$AGENT_SOCK" ]; then
-    eval "$(ssh-agent -s -a "$AGENT_SOCK")" >/dev/null
+    eval "$(ssh-agent -s -a "$AGENT_SOCK")" >/dev/null &! 
 fi
 
 export SSH_AUTH_SOCK="$AGENT_SOCK"
@@ -300,33 +274,23 @@ if ! ssh-add -l >/dev/null 2>&1; then
   ssh-add 2>/dev/null
 fi
 
-# View man pages inside vim
+# View man pages with vim
 export MANPAGER="vim -M +MANPAGER -"
 
-export GOPATH="$HOME/.local/share/go"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.local/scripts:$PATH"
-export PATH="$HOME/.local/share/pnpm:$PATH"
-export PATH="$HOME/.asdf/shims:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.opencode/bin:$PATH"
-export PATH="$HOME/dev/projects/flutter/bin:$PATH"
-export PATH="$HOME/.pub-cache/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
-export PATH="/usr/local/mysql/bin:/usr/local/share/mysql/bin:$PATH"
-export MANPATH="/usr/local/man:$MANPATH"
-
-export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-
-export PNPM_HOME="/home/maya/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+typeset -U path
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.local/scripts"
+  "$HOME/.cargo/bin"
+  "/usr/local/mysql/bin"
+  "/usr/local/share/mysql/bin"
+  $path
+)
 
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd z zsh)"
+eval "$(mise env zsh)"
 # eval "$(starship init zsh)" 
 
 # ------------------------------------------------------------

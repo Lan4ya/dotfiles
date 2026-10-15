@@ -118,7 +118,7 @@ return {
         main = 'ibl',
         event = { 'BufReadPost', 'BufNewFile' },
         config = function()
-            require 'configs.ibl'
+            require 'configs.indent-blankline'
         end,
     },
 

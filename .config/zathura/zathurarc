@@ -1,3 +1,9 @@
+# Enable recoloring for dark mode
+set recolor "true"
+
+# Keep the original hue of colors (like in images)
+set recolor-keephue "true"
+
 set scroll-step 100
 set selection-clipboard clipboard
 
