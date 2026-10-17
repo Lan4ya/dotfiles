@@ -21,8 +21,6 @@ zinit light romkatv/powerlevel10k
 
 # Use "zinit ice wait lucid" to lazy load plugins & snippets 
 
-# Add zsh snippets 
-
 zinit ice wait lucid 
 zinit snippet OMZP::git # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
 
@@ -41,7 +39,7 @@ zinit light zsh-users/zsh-completions
 # zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
-# Run a quiet parallel update automatically once every 7 days
+# Run a quiet update automatically once every 7 days
 local zinit_update_stamp="${ZINIT_HOME}/._last_auto_update"
 if [[ -n "$ZINIT_HOME" && -n "$zinit_update_stamp"(#qN.mh+168) ]]; then
   (zinit self-update -q && zinit update --parallel -q && touch "$zinit_update_stamp") &!
@@ -49,7 +47,7 @@ elif [[ ! -f "$zinit_update_stamp" ]]; then
   touch "$zinit_update_stamp"
 fi
 
-# Compinit cache 
+# Load completions once then cache it for 24hrs 
 setopt extendedglob
 local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
 if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
@@ -220,8 +218,8 @@ HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
-ZSH_AUTOSUGGEST_USE_ASYNC=1
+# ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+# ZSH_AUTOSUGGEST_USE_ASYNC=1
 setopt NO_FLOW_CONTROL # Disabled legacy TTY flow monitoring 
 setopt HASH_CMDS # Application command caching
 setopt appendhistory
@@ -247,7 +245,7 @@ alias lla='ls -la'
 alias yaycleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
 alias cleanf='sudo pacman -Sc --noconfirm' 
-alias t='thunar' 
+alias t='setsid thunar' 
 alias a='tmux a'
 alias j='nvim' 
 alias nv='NVIM_APPNAME=nvim-minimal nvim' 

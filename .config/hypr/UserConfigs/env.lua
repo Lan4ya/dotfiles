@@ -1,5 +1,3 @@
----@module 'hl'
-
 hl.env("EDITOR", "nvim")
 
 hl.env("GDK_BACKEND", "wayland,x11,*")

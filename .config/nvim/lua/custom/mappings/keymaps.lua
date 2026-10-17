@@ -169,8 +169,7 @@ map('n', '<leader>n', function()
 
     -- defer to give the UI time to initialize
     vim.defer_fn(function()
-        nnp.resize(135)
-        -- nnp.resize(110)
+        nnp.resize(120) -- lower == wider
         nnp.toggle_side 'right'
     end, 5)
 end, { desc = 'NoNeckPain' })

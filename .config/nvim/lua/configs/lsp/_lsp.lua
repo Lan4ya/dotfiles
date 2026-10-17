@@ -1,4 +1,4 @@
-local lspconfig = require 'lspconfig'
+-- Lsp progress UI
 require('fidget').setup {}
 
 -- Avoid documentColor stale-client assertions; use nvim-highlight-colors instead.
@@ -14,7 +14,7 @@ vim.diagnostic.config {
     update_in_insert = true,
 }
 
--- disable semantic tokens provider
+-- Disable semantic tokens provider
 local function on_init(client, _)
     if client:supports_method 'textDocument/semanticTokens' then
         client.server_capabilities.semanticTokensProvider = nil
@@ -50,7 +50,7 @@ local servers = {
 
 require('mason-tool-installer').setup {
     ensure_installed = {
-        -- lsp's
+        -- Lsp's
         'lua-language-server',
         'clangd',
         'tailwindcss-language-server',
@@ -61,7 +61,7 @@ require('mason-tool-installer').setup {
         'css-lsp',
         'html-lsp',
 
-        -- formatters
+        -- Formatters
         'stylua',
         'prettier',
         'prettierd',
@@ -69,7 +69,7 @@ require('mason-tool-installer').setup {
         'stylelint',
         'jsonlint',
 
-        -- linters
+        -- Linters
         'eslint-lsp', -- vscode-eslint-language-server
         'markuplint',
         'stylelint',

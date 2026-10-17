@@ -1,5 +1,3 @@
----@module 'hl'
-
 -- See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 
 -- =============================================================================
@@ -15,6 +13,12 @@ hl.window_rule({
 hl.window_rule({
 	name = "tag_browser_to_workspace_12",
 	match = { tag = "browser*" },
+	workspace = "12",
+})
+
+hl.window_rule({
+	name = "class_zathura_to_workspace_12",
+	match = { class = "^([Zz]athura|org.pwmt.zathura)$" },
 	workspace = "12",
 })
 
@@ -94,30 +98,6 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name = "tag_chromium",
-	match = { class = "^([Cc]hromium)$" },
-	tag = "+browser",
-})
-
-hl.window_rule({
-	name = "tag_microsoft_edge",
-	match = { class = "^([Mm]icrosoft-edge(-stable|-beta|-dev|-unstable))$" },
-	tag = "+browser",
-})
-
-hl.window_rule({
-	name = "tag_brave",
-	match = { class = "^(Brave-browser(-beta|-dev|-unstable)?)$" },
-	tag = "+browser",
-})
-
-hl.window_rule({
-	name = "tag_thorium",
-	match = { class = "^([Tt]horium-browser|[Cc]achy-browser)$" },
-	tag = "+browser",
-})
-
-hl.window_rule({
 	name = "tag_zen",
 	match = { class = "^(zen)$" },
 	tag = "+browser",
@@ -176,21 +156,10 @@ hl.window_rule({
 })
 
 -- Project tags
-hl.window_rule({
-	name = "tag_codium",
-	match = { class = "^(codium|codium-url-handler|VSCodium)$" },
-	tag = "+projects",
-})
 
 hl.window_rule({
 	name = "tag_vscode",
 	match = { class = "^(VSCode|code|code-url-handler)$" },
-	tag = "+projects",
-})
-
-hl.window_rule({
-	name = "tag_zed",
-	match = { class = "^(dev.zed.Zed|antigravity)$" },
 	tag = "+projects",
 })
 
@@ -211,12 +180,6 @@ hl.window_rule({
 hl.window_rule({
 	name = "tag_ferdium",
 	match = { class = "^([Ff]erdium)$" },
-	tag = "+im",
-})
-
-hl.window_rule({
-	name = "tag_whatsapp",
-	match = { class = "^([Ww]hatsapp-for-linux)$" },
 	tag = "+im",
 })
 

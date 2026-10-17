@@ -2,10 +2,6 @@
 -- https://github.com/Prateek-squadron/hyprconf2lua
 -- Manual review may be needed for complex directives
 
----@module 'hl'
----@diagnostic disable: undefined-global
-local hl = hl or _G.hl
-
 --e User Settings
 -- This is where you put your own settings as this will not be touched during update
 -- if the upgrade.sh is used.

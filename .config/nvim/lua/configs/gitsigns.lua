@@ -1,4 +1,3 @@
--- Detect tabstop and shiftwidth automatically
 -- See `:help gitsigns` to understand what the configuration keys do
 -- git related signs to the gutter, as well as utilities for managing changes
 require('gitsigns').setup {

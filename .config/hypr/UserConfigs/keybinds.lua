@@ -1,6 +1,3 @@
----@diagnostic disable: undefined-global
-local hl = hl
-
 local mainMod = "SUPER"
 
 -- Exit Hyprland

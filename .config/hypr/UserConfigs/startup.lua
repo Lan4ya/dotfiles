@@ -1,6 +1,3 @@
----@diagnostic disable: undefined-global
-local hl = hl
-
 local home = os.getenv("HOME")
 
 -- local scriptsDir = home .. "/.config/hypr/scripts"
